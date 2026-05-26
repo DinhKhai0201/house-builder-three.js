@@ -7,7 +7,7 @@ import KitchenModule from './modules/KitchenModule'
 import LivingModule from './modules/LivingModule'
 import MasterModule from './modules/MasterModule'
 import YardModule from './modules/YardModule'
-import { Box } from './primitives'
+import { Box, Cylinder } from './primitives'
 
 export default function HouseModel({ showRoof = false, showLowerLevel = true }) {
   const frontYard = getRow('front-yard')
@@ -40,6 +40,18 @@ export default function HouseModel({ showRoof = false, showLowerLevel = true }) 
               />
             )
           })}
+
+          {/* 3. Mái tôn che sân xe và cầu thang (Front Canopy) */}
+          {/* Trụ inox tròn (2 cái phía trước) */}
+          <Cylinder radiusTop={0.04} radiusBottom={0.04} height={4.3} position={[-4.2, -0.35, -1.1]} color="#d3d9df" />
+          <Cylinder radiusTop={0.04} radiusBottom={0.04} height={4.3} position={[-4.2, -0.35, 1.1]} color="#d3d9df" />
+          
+          {/* Khung kèo thép nằm ngang đỡ mái tôn */}
+          <Box size={[4.8, 0.04, 0.04]} position={[-2.25, 2.38, -1.1]} rotation={[0, 0, 0.26]} color="#4a4a4a" />
+          <Box size={[4.8, 0.04, 0.04]} position={[-2.25, 2.38, 1.1]} rotation={[0, 0, 0.26]} color="#4a4a4a" />
+          
+          {/* Tấm mái tôn (Độ dốc nghiêng từ Y=3.0 xuống Y=1.8) */}
+          <Box size={[4.8, 0.02, 2.6]} position={[-2.25, 2.4, 0]} rotation={[0, 0, 0.26]} color="#aab3b6" />
 
           {/* Đế móng cao 2.5m dưới nhà */}
           <Box size={[26.7, 2.5, 3.2]} position={[13.35, -1.25, 0]} color="#d0cec8" />

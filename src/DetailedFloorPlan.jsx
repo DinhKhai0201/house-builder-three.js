@@ -244,9 +244,7 @@ export default function DetailedFloorPlan() {
           <DoorSwing x={bed2.start * SCALE + 20} y={fullHeight(bed2) - 6} radius={32} />
           <DoorSwing x={wc.start * SCALE + 20} y={fullHeight(wc) - 6} radius={30} />
 
-          <WindowMark x={bed1.start * SCALE + 14} y={8} width={58} />
-          <WindowMark x={bed2.start * SCALE + 14} y={8} width={58} />
-          <WindowMark x={(master.end - 1.25) * SCALE} y={8} width={82} />
+          <WindowMark x={(bed2.start + 1.33) * SCALE} y={fullHeight(bed2)} width={1.0 * SCALE} />
           <WindowMark x={master.end * SCALE - 4} y={52} width={64} horizontal={false} />
 
           <text x={(master.end + 0.15) * SCALE} y={78} className="side-callout">

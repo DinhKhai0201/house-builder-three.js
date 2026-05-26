@@ -1,5 +1,5 @@
 import { Box, Cylinder, GlassPanel } from './primitives'
-import { avgWidth, corridorCenterZ, getRow } from './roomUtils'
+import { avgWidth, corridorCenterZ, getRow, roomCenterX } from './roomUtils'
 
 export default function RoofSystem() {
   const living = getRow('living')
@@ -37,7 +37,7 @@ export default function RoofSystem() {
   const rearSlabLength = slabEnd - (skylightCenterX + skylightLength / 2)
   const leftSlabWidth = skylightCenterZ - skylightWidth / 2 - (-slabWidth / 2)
   const rightSlabWidth = slabWidth / 2 - (skylightCenterZ + skylightWidth / 2)
-  const tankX = skylightCenterX + 0.15
+  const tankX = skylightCenterX + 0.5
   const tankZ = -slabWidth / 2 + 0.85
   const curbY = 3.40
   const glassY = curbY + skylightCurbHeight / 2 + 0.03
@@ -87,25 +87,31 @@ export default function RoofSystem() {
       <Box size={[0.66, 0.04, 0.04]} position={[tankX, 3.27 + 0.025 + 0.02, tankZ - 0.4]} color="#8f8f8c" />
       <Box size={[0.66, 0.04, 0.04]} position={[tankX, 3.27 + 0.025 + 0.02, tankZ + 0.4]} color="#8f8f8c" />
 
-      {/* Tấm thái dương năng đặt nghiêng trên mái bê tông bên cạnh bồn nước */}
-      <Box size={[1.1, 0.08, 0.85]} position={[tankX + 1.0, 3.27 + 0.025 + 0.16, tankZ]} rotation={[0, 0, -0.22]} color="#647880" />
-      {/* Khung đỡ thái dương năng */}
-      <Box size={[0.04, 0.32, 0.85]} position={[tankX + 1.5, 3.27 + 0.025 + 0.16, tankZ]} color="#8f8f8c" />
+      {/* Mái che bảo vệ bồn nước (khung sắt và mái tôn) */}
+      <group position={[tankX, 3.295, tankZ]}>
+        {/* 4 Trụ sắt đỡ mái che (Cao phía trước, thấp phía sau) */}
+        <Box size={[0.04, 1.4, 0.04]} position={[-0.7, 0.7, -0.6]} color="#6b6b68" />
+        <Box size={[0.04, 1.4, 0.04]} position={[-0.7, 0.7, 0.6]} color="#6b6b68" />
+        <Box size={[0.04, 1.15, 0.04]} position={[0.7, 0.575, -0.6]} color="#6b6b68" />
+        <Box size={[0.04, 1.15, 0.04]} position={[0.7, 0.575, 0.6]} color="#6b6b68" />
+        
+        {/* Khung viền dọc đỡ mái (chạy theo hướng nghiêng) */}
+        <Box size={[1.44, 0.04, 0.04]} position={[0, 1.275, -0.6]} rotation={[0, 0, -0.17]} color="#6b6b68" />
+        <Box size={[1.44, 0.04, 0.04]} position={[0, 1.275, 0.6]} rotation={[0, 0, -0.17]} color="#6b6b68" />
+        
+        {/* Tấm mái tôn che bồn nước (nghiêng về phía sau nhà) */}
+        <Box size={[1.6, 0.02, 1.4]} position={[0, 1.295, 0]} rotation={[0, 0, -0.17]} color="#aab3b6" />
+      </group>
 
       {/* Bợ gạch viền xung quanh mái bê tông cao 15cm sơn màu xanh #2f6e6c */}
       <Box size={[slabLength, 0.15, 0.06]} position={[slabCenter, 3.295 + 0.075, -slabWidth / 2 + 0.03]} color="#2f6e6c" />
       <Box size={[slabLength, 0.15, 0.06]} position={[slabCenter, 3.295 + 0.075, slabWidth / 2 - 0.03]} color="#2f6e6c" />
       <Box size={[0.06, 0.15, slabWidth]} position={[slabEnd - 0.03, 3.295 + 0.075, 0]} color="#2f6e6c" />
 
-      {/* Hệ thống thoát nước mưa cho mái bê tông (chạy ra sau nhà ở khu vực sân sau) */}
-      {/* Đổi từ bên trái (+slabWidth/2) sang bên PHẢI (-slabWidth/2) và ép sát góc (sát tường sau và sát tường phải) */}
-      {/* Phễu thu nước mưa trên mái */}
+      {/* Hệ thống thoát nước mưa cho mái bê tông (chạy thẳng xuống mái tôn sân sau) */}
+      {/* Phễu thu nước mưa trên mái bê tông */}
       <Box size={[0.16, 0.02, 0.16]} position={[slabEnd - 0.56, 3.295 + 0.01, -slabWidth / 2 + 0.08]} color="#7a7a7a" />
-      {/* Ống nước đứng dẫn thẳng xuống sân sau */}
-      <Cylinder position={[slabEnd - 0.56, 3.295 / 2, -slabWidth / 2 + 0.08]} radiusTop={0.035} radiusBottom={0.035} height={3.295} rotation={[0, 0, 0]} color="#8d8d8a" />
-      {/* Đai ôm cơ khí định vị ống vào tường sau */}
-      <Box size={[0.04, 0.02, 0.06]} position={[slabEnd - 0.58, 1.0, -slabWidth / 2 + 0.08]} color="#6b6b68" />
-      <Box size={[0.04, 0.02, 0.06]} position={[slabEnd - 0.58, 2.5, -slabWidth / 2 + 0.08]} color="#6b6b68" />
+      {/* Đã xóa ống dẫn nước đứng theo yêu cầu vì nước sẽ xả thẳng xuống mái tôn sân sau */}
 
 
 
@@ -141,6 +147,27 @@ export default function RoofSystem() {
           </group>
         )
       })}
+
+      {/* --- MÁI TÔN VÀ TƯỜNG BỊT KHE HỞ SÂN SAU --- */}
+      {/* 1. Tường tam giác bịt khe hở 2 bên sân sau */}
+      {(() => {
+        const backYard = getRow('back-yard')
+        const byWidth = avgWidth(backYard)
+        const byDepth = backYard.length
+        const byCenterX = roomCenterX(backYard)
+        return (
+          <group>
+            {/* 2. Mái tôn sân sau dốc ra sau, dài hơn nhà 1 tí */}
+            <group position={[byCenterX + 0.1, 2.87, 0]}>
+              {/* Khung xà gồ thép */}
+              <Box size={[byDepth + 0.2, 0.04, 0.04]} position={[0, -0.02, -byWidth / 2 + 0.1]} rotation={[0, 0, -0.15]} color="#4a4a4a" />
+              <Box size={[byDepth + 0.2, 0.04, 0.04]} position={[0, -0.02, byWidth / 2 - 0.1]} rotation={[0, 0, -0.15]} color="#4a4a4a" />
+              {/* Tấm tôn */}
+              <Box size={[byDepth + 0.2, 0.02, byWidth + 0.1]} position={[0, 0, 0]} rotation={[0, 0, -0.15]} color="#aab3b6" />
+            </group>
+          </group>
+        )
+      })()}
     </group>
   )
 }
