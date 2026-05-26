@@ -80,7 +80,7 @@ export default function RoofSystem() {
 
       {/* Bồn nước inox ngang loại to (1000L - 1500L, dài 1.35m, đường kính 0.96m) quay ngang đặt trực tiếp lên sàn bê tông */}
       <Cylinder position={[tankX, 3.27 + 0.025 + 0.04 + 0.48, tankZ]} radiusTop={0.48} radiusBottom={0.48} height={1.35} rotation={[Math.PI / 2, 0, 0]} color="#b5b5b2" />
-      
+
       {/* Khung nôi đỡ bồn nằm trực tiếp trên mái bê tông (xóa 4 chân đứng) */}
       <Box size={[0.04, 0.04, 1.1]} position={[tankX - 0.3, 3.27 + 0.025 + 0.02, tankZ]} color="#8f8f8c" />
       <Box size={[0.04, 0.04, 1.1]} position={[tankX + 0.3, 3.27 + 0.025 + 0.02, tankZ]} color="#8f8f8c" />
@@ -98,13 +98,14 @@ export default function RoofSystem() {
       <Box size={[0.06, 0.15, slabWidth]} position={[slabEnd - 0.03, 3.295 + 0.075, 0]} color="#2f6e6c" />
 
       {/* Hệ thống thoát nước mưa cho mái bê tông (chạy ra sau nhà ở khu vực sân sau) */}
+      {/* Đổi từ bên trái (+slabWidth/2) sang bên PHẢI (-slabWidth/2) và ép sát góc (sát tường sau và sát tường phải) */}
       {/* Phễu thu nước mưa trên mái */}
-      <Box size={[0.16, 0.02, 0.16]} position={[slabEnd - 0.52, 3.295 + 0.01, slabWidth / 2 - 0.15]} color="#7a7a7a" />
-      {/* Ống nước đứng dẫn thẳng xuống sân sau (ôm sát mảng tường Master ngoài sân sau) */}
-      <Cylinder position={[slabEnd - 0.52, 3.295 / 2, slabWidth / 2 - 0.15]} radiusTop={0.035} radiusBottom={0.035} height={3.295} rotation={[0, 0, 0]} color="#8d8d8a" />
+      <Box size={[0.16, 0.02, 0.16]} position={[slabEnd - 0.56, 3.295 + 0.01, -slabWidth / 2 + 0.08]} color="#7a7a7a" />
+      {/* Ống nước đứng dẫn thẳng xuống sân sau */}
+      <Cylinder position={[slabEnd - 0.56, 3.295 / 2, -slabWidth / 2 + 0.08]} radiusTop={0.035} radiusBottom={0.035} height={3.295} rotation={[0, 0, 0]} color="#8d8d8a" />
       {/* Đai ôm cơ khí định vị ống vào tường sau */}
-      <Box size={[0.04, 0.02, 0.06]} position={[slabEnd - 0.55, 1.0, slabWidth / 2 - 0.15]} color="#6b6b68" />
-      <Box size={[0.04, 0.02, 0.06]} position={[slabEnd - 0.55, 2.5, slabWidth / 2 - 0.15]} color="#6b6b68" />
+      <Box size={[0.04, 0.02, 0.06]} position={[slabEnd - 0.58, 1.0, -slabWidth / 2 + 0.08]} color="#6b6b68" />
+      <Box size={[0.04, 0.02, 0.06]} position={[slabEnd - 0.58, 2.5, -slabWidth / 2 + 0.08]} color="#6b6b68" />
 
 
 
