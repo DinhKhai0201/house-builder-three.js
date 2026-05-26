@@ -105,6 +105,10 @@ export default function MasterModule({ row }) {
       <Box size={[0.05, 0.06, rearWindowWidth + 0.04]} position={[rearFaceX, windowSillY + 0.03, rearWindowCenterZ]} color="#ece5d8" />
       <GlassPanel size={[0.03, rearWindowHeight - 0.08, rearWindowWidth - 0.08]} position={[rearFaceX - 0.01, windowSillY + rearWindowHeight / 2, rearWindowCenterZ]} color="#dfe5e6" />
 
+      {/* Gờ bê tông che mưa (ô văng) nhô ra 10cm phía trên cửa chính sân sau và cửa sổ */}
+      <Box size={[0.18, 0.05, rearDoorWidth + 0.12]} position={[rearFaceX + 0.05, 2.37, rearDoorCenterZ]} color="#fbfaf6" />
+      <Box size={[0.18, 0.05, rearWindowWidth + 0.12]} position={[rearFaceX + 0.05, 2.37, rearWindowCenterZ]} color="#fbfaf6" />
+
       <Bed
         position={[centerX + 1.45, 0.04, -width / 2 + 1.02]}
         width={1.75}

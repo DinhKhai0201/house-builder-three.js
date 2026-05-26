@@ -29,7 +29,7 @@ export default function KitchenModule({ row }) {
   const counterTopY = 0.9
   const counterTopThickness = 0.06
   const sinkX = shortRunCenterX
-  const sinkZ = -width / 2 + wallT + shortRunLength - 0.38
+  const sinkZ = -width / 2 + wallT + shortRunLength - 0.58
 
   return (
     <group>
@@ -43,11 +43,18 @@ export default function KitchenModule({ row }) {
       <Box size={[longRunLength, counterTopThickness, counterDepth]} position={[longRunCenterX, counterTopY, longRunZ]} color="#dcb58a" />
       <Box size={[counterDepth, counterTopThickness, shortRunLength]} position={[shortRunCenterX, counterTopY, shortRunCenterZ]} color="#dcb58a" />
       <Box size={[cornerLength, counterTopThickness, counterDepth]} position={[cornerCenterX, counterTopY, cornerCenterZ]} color="#dcb58a" />
-      <Box size={[0.4, 0.02, 0.5]} position={[sinkX, counterTopY + 0.04, sinkZ]} color="#c7d0d2" />
-      <Box size={[0.26, 0.05, 0.34]} position={[sinkX, counterTopY + 0.025, sinkZ]} color="#7f9096" />
-      <Cabinet position={[roomStartX + 2.7, 0.9, -width / 2 + 0.16]} size={[1.0, 0.12, 0.18]} color="#2a2928" />
+      {/* Bồn rửa bát lớn 75cm (dọc Z), cao/sâu 25cm, hố màu trắng (nâng cao độ Y để không bị mặt đá bếp che khuất) */}
+      <Box size={[0.42, 0.02, 0.82]} position={[sinkX, 0.94, sinkZ]} color="#e5e5e5" />
+      <Box size={[0.30, 0.25, 0.75]} position={[sinkX, 0.815, sinkZ]} color="#ffffff" />
+      <Cabinet position={[roomStartX + 2.2, 1.50, -width / 2 + 0.12]} size={[0.9, 0.10, 0.24]} color="#2a2928" />
       <Cabinet position={[fridgeX, 0, -width / 2 + 0.26]} size={[0.48, 1.85, 0.5]} color="#d5d0c8" />
       <Cabinet position={[filterX, 0, -width / 2 + 0.24]} size={[0.3, 0.98, 0.44]} color="#f2f3f4" />
+
+      {/* Kệ mở trang trí chạy dọc tường bếp sau (không chạy sang phía tường phòng ngủ 1) - Tầng 1 (Y = 1.6m) */}
+      <Box size={[3.0, 0.04, 0.24]} position={[roomStartX + depth - 1.5, 1.60, -width / 2 + 0.04 + 0.12]} color="#dcb58a" />
+
+      {/* Kệ mở trang trí chạy dọc tường bếp sau - Tầng 2 (Y = 2.10m) */}
+      <Box size={[3.0, 0.04, 0.24]} position={[roomStartX + depth - 1.5, 2.10, -width / 2 + 0.04 + 0.12]} color="#dcb58a" />
 
       <Table position={[diningTableX, 0.04, width / 2 - 0.755]} size={[0.72, 0.08, 1.35]} />
       {/* Ghế xếp 2 bên hông bàn (bên trái và bên phải) */}

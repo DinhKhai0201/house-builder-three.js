@@ -4,9 +4,28 @@ import DetailedFloorPlan from './DetailedFloorPlan'
 import SceneErrorBoundary from './SceneErrorBoundary'
 import { descriptionBlocks, estimatedSiteLength, keyNotes } from './data/housePlan'
 
+function PremiumSwitch({ label, checked, onChange }) {
+  return (
+    <label className="premium-switch">
+      <span>{label}</span>
+      <div className="switch-wrapper">
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={(e) => onChange(e.target.checked)}
+          className="switch-input"
+        />
+        <span className="switch-slider"></span>
+      </div>
+    </label>
+  )
+}
+
 function App() {
   const [showRoof, setShowRoof] = useState(false)
-  const [showLowerLevel, setShowLowerLevel] = useState(true)
+  const [showLowerLevel, setShowLowerLevel] = useState(false)
+  const [firstPerson, setFirstPerson] = useState(false)
+  const [focusRoom, setFocusRoom] = useState('living')
 
   return (
     <main className="app-shell">
@@ -57,30 +76,44 @@ function App() {
 
       <section className="panel dark-panel">
         <article className="wide">
-          <div className="section-head light">
-            <p className="eyebrow">Mô phỏng 3D</p>
-            <h2>Khối 3D có thể xoay và đã chia phần để dễ chỉnh sửa</h2>
-          </div>
-          <div className="scene-toolbar">
-            <button
-              type="button"
-              className={`roof-toggle ${showRoof ? 'is-active' : ''}`}
-              onClick={() => setShowRoof((value) => !value)}
-            >
-              {showRoof ? 'Ẩn mái nhà' : 'Hiện mái nhà'}
-            </button>
-            <button
-              type="button"
-              className={`roof-toggle ${showLowerLevel ? 'is-active' : ''}`}
-              onClick={() => setShowLowerLevel((value) => !value)}
-            >
-              {showLowerLevel ? 'Ẩn nền dưới' : 'Hiện nền dưới'}
-            </button>
-            <span className="scene-hint">Mái tôn phủ từ phòng khách đến phòng ngủ 1. Khu WC và master là đổ mê, có bồn nước trên mái.</span>
+          <div className="scene-toolbar" style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+            <PremiumSwitch label="Mái nhà" checked={showRoof} onChange={setShowRoof} />
+            <PremiumSwitch label="Nền dưới" checked={showLowerLevel} onChange={setShowLowerLevel} />
+            <PremiumSwitch label="Tham quan" checked={firstPerson} onChange={setFirstPerson} />
+
+            {!firstPerson && (
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                <span className="scene-hint" style={{ color: '#fff8ee', fontWeight: '500' }}>Tiêu điểm:</span>
+                <select
+                  value={focusRoom}
+                  onChange={(e) => setFocusRoom(e.target.value)}
+                  className="premium-select"
+                >
+                  <option value="front">Sân trước</option>
+                  <option value="living">Phòng khách</option>
+                  <option value="kitchen">Bếp & ăn</option>
+                  <option value="bed1">Phòng ngủ 1</option>
+                  <option value="bed2">Phòng ngủ 2</option>
+                  <option value="wc">Nhà vệ sinh</option>
+                  <option value="master">Phòng master</option>
+                  <option value="back">Sân sau</option>
+                </select>
+              </div>
+            )}
+
+            {firstPerson ? (
+              <span className="scene-hint animate-fade-in" style={{ color: '#ffd59a', fontWeight: 'bold', marginLeft: 'auto' }}>
+                👉 Nhấn giữ và rê chuột trên màn hình để xoay hướng nhìn. Nhấn các phím W-A-S-D hoặc phím Mũi tên để di chuyển trong nhà.
+              </span>
+            ) : (
+              <span className="scene-hint" style={{ marginLeft: 'auto' }}>
+                Dùng chuột kéo để xoay 360 độ, cuộn để zoom. Sử dụng Tiêu điểm để xoay quanh từng phòng dễ dàng.
+              </span>
+            )}
           </div>
           <div className="canvas-wrap">
             <SceneErrorBoundary>
-              <HouseScene showRoof={showRoof} showLowerLevel={showLowerLevel} />
+              <HouseScene showRoof={showRoof} showLowerLevel={showLowerLevel} firstPerson={firstPerson} focusRoom={focusRoom} />
             </SceneErrorBoundary>
           </div>
         </article>
