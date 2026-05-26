@@ -19,6 +19,9 @@ export default function YardModule({ row, back = false }) {
       <Wall size={[depth, wallHeight, borderThickness]} position={[centerX, wallHeight / 2, width / 2]} color="#f7f4ed" />
       {back ? (
         <group>
+          {/* Tường xây cao lên chạm mái che ở sân sau (ngắn hơn mái che 20cm -> dài 40cm) */}
+          <Wall size={[0.4, 0.6, borderThickness]} position={[centerX - depth / 2 + 0.2, 2.45 + 0.3, -width / 2]} color="#f7f4ed" />
+          <Wall size={[0.4, 0.6, borderThickness]} position={[centerX - depth / 2 + 0.2, 2.45 + 0.3, width / 2]} color="#f7f4ed" />
           <Box size={[0.08, 0.08, railWidth]} position={[rearEdgeX, 1.03, 0]} color="#bfc6cb" />
           <Box size={[0.08, 0.06, railWidth]} position={[rearEdgeX, 0.08, 0]} color="#aeb7bc" />
           {Array.from({ length: balusterCount }).map((_, index) => {

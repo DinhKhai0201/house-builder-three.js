@@ -300,6 +300,14 @@ h2 {
   background: linear-gradient(180deg, #f6efe4, #ece1cf);
 }
 
+.canvas-wrap:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  border-radius: 0;
+  border: none;
+}
+
 .canvas-wrap canvas {
   touch-action: none;
 }

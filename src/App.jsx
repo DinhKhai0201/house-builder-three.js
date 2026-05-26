@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import HouseScene from './HouseScene'
 import DetailedFloorPlan from './DetailedFloorPlan'
 import SceneErrorBoundary from './SceneErrorBoundary'
@@ -26,6 +26,28 @@ function App() {
   const [showLowerLevel, setShowLowerLevel] = useState(false)
   const [firstPerson, setFirstPerson] = useState(false)
   const [focusRoom, setFocusRoom] = useState('living')
+  const [isFullscreen, setIsFullscreen] = useState(false)
+  const panelRef = useRef(null)
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange)
+  }, [])
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      if (panelRef.current?.requestFullscreen) {
+        panelRef.current.requestFullscreen()
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen()
+      }
+    }
+  }
 
   return (
     <main className="app-shell">
@@ -75,11 +97,16 @@ function App() {
       </section>
 
       <section className="panel dark-panel">
-        <article className="wide">
+        <article className="wide" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
           <div className="scene-toolbar" style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
             <PremiumSwitch label="Mái nhà" checked={showRoof} onChange={setShowRoof} />
             <PremiumSwitch label="Nền dưới" checked={showLowerLevel} onChange={setShowLowerLevel} />
             <PremiumSwitch label="Tham quan" checked={firstPerson} onChange={setFirstPerson} />
+            {!isFullscreen && (
+              <button className="roof-toggle" onClick={toggleFullscreen}>
+                ⛶ Toàn màn hình
+              </button>
+            )}
 
             {!firstPerson && (
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
@@ -111,7 +138,24 @@ function App() {
               </span>
             )}
           </div>
-          <div className="canvas-wrap">
+          <div className="canvas-wrap" ref={panelRef} style={{ position: 'relative' }}>
+            {isFullscreen && (
+              <button
+                onClick={toggleFullscreen}
+                className="roof-toggle"
+                style={{
+                  position: 'absolute',
+                  top: '20px',
+                  right: '20px',
+                  zIndex: 10,
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                  backgroundColor: 'rgba(44, 33, 24, 0.85)',
+                  border: '1px solid rgba(255,255,255,0.2)'
+                }}
+              >
+                ⛶
+              </button>
+            )}
             <SceneErrorBoundary>
               <HouseScene showRoof={showRoof} showLowerLevel={showLowerLevel} firstPerson={firstPerson} focusRoom={focusRoom} />
             </SceneErrorBoundary>

@@ -135,7 +135,6 @@ export default function KitchenModule({ row }) {
       {/* Bồn rửa bát lớn 75cm (dọc Z), cao/sâu 25cm, hố màu trắng */}
       <Box size={[0.42, 0.02, 0.82]} position={[sinkX, 0.94, sinkZ]} color="#e5e5e5" />
       <Box size={[0.30, 0.25, 0.75]} position={[sinkX, 0.815, sinkZ]} color="#ffffff" />
-      <Cabinet position={[roomStartX + 2.2, 1.50, -width / 2 + 0.12]} size={[0.9, 0.10, 0.24]} color="#2a2928" />
       <Cabinet position={[fridgeX, 0, -width / 2 + 0.26]} size={[0.48, 1.85, 0.5]} color="#d5d0c8" />
       <Cabinet position={[filterX, 0, -width / 2 + 0.24]} size={[0.3, 0.98, 0.44]} color="#f2f3f4" />
 
