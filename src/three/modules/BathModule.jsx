@@ -23,22 +23,22 @@ export default function BathModule({ row }) {
   const corridorCenterZ = width / 2 - corridorWidth / 2
   const roomStartX = centerX - depth / 2
   const roomEndX = centerX + depth / 2
-  
+
   // Layout X coordinates
   const toiletX = roomStartX + 0.45
   const showerX = roomEndX - 0.45
   const sinkX = roomEndX - 0.4
-  
+
   // Layout Z coordinates
   const toiletZ = roomTopZ + 0.35
   const showerZ = roomTopZ + 0.45
   const sinkZ = corridorDividerZ - 0.18
-  
+
   // Niche parameters (Back Wall)
   const nicheW = 0.36
   const nicheWC_X = roomStartX + 0.45
   const nicheShower_X = roomEndX - 0.45
-  
+
   const wallLeft_W = (nicheWC_X - nicheW / 2) - roomStartX
   const wallMid_W = (nicheShower_X - nicheW / 2) - (nicheWC_X + nicheW / 2)
   const wallRight_W = roomEndX - (nicheShower_X + nicheW / 2)
@@ -47,7 +47,7 @@ export default function BathModule({ row }) {
     <group>
       <Floor size={[depth, 0.06, mainWidth]} position={[centerX, 0.03, mainCenterZ]} color="#b9b0a7" />
       <Floor size={[depth, 0.06, corridorWidth]} position={[centerX, 0.03, corridorCenterZ]} color="#f1e5d5" />
-      
+
       {/* --- EXTERIOR BACK WALL WITH NICHES --- */}
       {/* 1. Left solid segment */}
       <Wall size={[wallLeft_W, wallH, wallT]} position={[roomStartX + wallLeft_W / 2, wallH / 2, roomTopZ]} color="#fbfaf6" />
@@ -55,7 +55,7 @@ export default function BathModule({ row }) {
       <Wall size={[wallMid_W, wallH, wallT]} position={[nicheWC_X + nicheW / 2 + wallMid_W / 2, wallH / 2, roomTopZ]} color="#fbfaf6" />
       {/* 3. Right solid segment */}
       <Wall size={[wallRight_W, wallH, wallT]} position={[roomEndX - wallRight_W / 2, wallH / 2, roomTopZ]} color="#fbfaf6" />
-      
+
       {/* Niche Columns (WC & Shower) */}
       {[nicheWC_X, nicheShower_X].map((nx, i) => (
         <group key={i}>
@@ -81,10 +81,10 @@ export default function BathModule({ row }) {
       {leftWallWidth > 0 ? (
         <Wall size={[leftWallWidth, wallH, wallT]} position={[roomStartX + leftWallWidth / 2, wallH / 2, corridorDividerZ]} color="#fbfaf6" />
       ) : null}
-      
+
       {/* Right corridor wall explicitly drawn to fix missing wall issue */}
       <Wall size={[0.92, wallH, wallT]} position={[roomStartX + 1.34, wallH / 2, corridorDividerZ]} color="#fbfaf6" />
-      
+
       <Wall size={[doorWidth, wallH - doorHeight, wallT]} position={[openingCenterX, doorHeight + (wallH - doorHeight) / 2, corridorDividerZ]} color="#fbfaf6" />
 
       {/* --- LAVABO AREA (Attached to corridor wall, facing inward) --- */}

@@ -117,7 +117,7 @@ export default function LivingModule({ row }) {
       <group position={[centerX - 0.82, 0.03, width / 2 - 0.56]} rotation={[0, Math.PI, 0]}>
         <Sofa position={[0, 0, 0]} />
       </group>
-      
+
       {/* Bàn trà Nhật thấp màu trắng nhỏ gọn (chiều cao ~0.3m, bề ngang hẹp 0.4m để rộng lối đi) */}
       <group>
         {/* Mặt bàn */}
@@ -136,17 +136,17 @@ export default function LivingModule({ row }) {
       <group position={[centerX + 2.18, 0.03, -width / 2 + 0.55]}>
         {/* Vách ốp lưng gỗ sát tường */}
         <Box size={[0.02, 2.6, 0.8]} position={[0.26, 1.3, 0]} color="#7a5535" />
-        
+
         {/* Tủ thờ gỗ bên dưới */}
         <Box size={[0.45, 0.82, 0.76]} position={[0.02, 0.41, 0]} color="#7a5535" />
-        
+
         {/* Mặt bàn thờ trên */}
         <Box size={[0.48, 0.08, 0.8]} position={[0.02, 0.86, 0]} color="#634225" />
-        
+
         {/* Vách ngăn trang trí hai bên hông có họa tiết thoáng */}
         <Box size={[0.5, 2.6, 0.02]} position={[0.02, 1.3, -0.39]} color="#7a5535" />
         <Box size={[0.5, 2.6, 0.02]} position={[0.02, 1.3, 0.39]} color="#7a5535" />
-        
+
         {/* Mái trần tủ thờ phía trên */}
         <Box size={[0.5, 0.08, 0.8]} position={[0.02, 2.56, 0]} color="#634225" />
       </group>
