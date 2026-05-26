@@ -1,0 +1,49 @@
+<svg width="1400" height="820" viewBox="0 0 1400 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1400" height="820" rx="36" fill="#F3EBDE"/>
+  <rect x="44" y="44" width="1312" height="732" rx="28" fill="#FFF9F0" stroke="#DCC9AE"/>
+  <text x="88" y="122" fill="#5B4737" font-family="Arial, sans-serif" font-size="38" font-weight="700">Mat bang nha cap 4 no hau</text>
+  <text x="88" y="160" fill="#8B735C" font-family="Arial, sans-serif" font-size="22">Mat tien 2.5m - no hau 3.0m - hanh lang ben phai 0.8m</text>
+
+  <g transform="translate(110 230)">
+    <polygon points="0,0 34,0 34,165 0,165" fill="#D8C7AF" stroke="#6C5844" stroke-width="3"/>
+    <text x="17" y="72" text-anchor="middle" fill="#4A392A" font-family="Arial, sans-serif" font-size="14" font-weight="700">San</text>
+    <text x="17" y="92" text-anchor="middle" fill="#6C5844" font-family="Arial, sans-serif" font-size="12">0.8m</text>
+
+    <polygon points="34,0 244,0 244,167 34,165" fill="#F7EFE2" stroke="#6C5844" stroke-width="3"/>
+    <text x="139" y="72" text-anchor="middle" fill="#4A392A" font-family="Arial, sans-serif" font-size="16" font-weight="700">Phong khach + ban tho</text>
+    <text x="139" y="96" text-anchor="middle" fill="#6C5844" font-family="Arial, sans-serif" font-size="12">5.0m</text>
+
+    <polygon points="244,0 483,0 483,118 244,112" fill="#EADBC6" stroke="#6C5844" stroke-width="3"/>
+    <polygon points="244,112 483,118 483,170 244,165" fill="#F7F3EA" stroke="#6C5844" stroke-width="3"/>
+    <text x="362" y="54" text-anchor="middle" fill="#4A392A" font-family="Arial, sans-serif" font-size="16" font-weight="700">Bep + an</text>
+    <text x="362" y="78" text-anchor="middle" fill="#6C5844" font-family="Arial, sans-serif" font-size="12">5.7m</text>
+    <text x="444" y="146" text-anchor="middle" fill="#8A7159" font-family="Arial, sans-serif" font-size="12" font-weight="700">Hanh lang 0.8m</text>
+
+    <polygon points="483,0 596,0 596,120 483,118" fill="#F0E4D0" stroke="#6C5844" stroke-width="3"/>
+    <polygon points="483,118 596,120 596,172 483,170" fill="#F7F3EA" stroke="#6C5844" stroke-width="3"/>
+    <text x="538" y="50" text-anchor="middle" fill="#4A392A" font-family="Arial, sans-serif" font-size="15" font-weight="700">Phong ngu 1</text>
+    <text x="538" y="74" text-anchor="middle" fill="#6C5844" font-family="Arial, sans-serif" font-size="12">2.7m</text>
+
+    <polygon points="596,0 709,0 709,122 596,120" fill="#EFE1CB" stroke="#6C5844" stroke-width="3"/>
+    <polygon points="596,120 709,122 709,174 596,172" fill="#F7F3EA" stroke="#6C5844" stroke-width="3"/>
+    <text x="652" y="50" text-anchor="middle" fill="#4A392A" font-family="Arial, sans-serif" font-size="15" font-weight="700">Phong ngu 2</text>
+    <text x="652" y="74" text-anchor="middle" fill="#6C5844" font-family="Arial, sans-serif" font-size="12">2.7m</text>
+
+    <polygon points="709,0 785,0 785,124 709,122" fill="#D7D4CC" stroke="#6C5844" stroke-width="3"/>
+    <polygon points="709,122 785,124 785,176 709,174" fill="#F7F3EA" stroke="#6C5844" stroke-width="3"/>
+    <text x="747" y="48" text-anchor="middle" fill="#4A392A" font-family="Arial, sans-serif" font-size="15" font-weight="700">WC + tam</text>
+    <text x="747" y="72" text-anchor="middle" fill="#6C5844" font-family="Arial, sans-serif" font-size="12">1.8m</text>
+
+    <polygon points="785,0 1037,0 1037,182 785,176" fill="#E6D4B8" stroke="#6C5844" stroke-width="3"/>
+    <text x="911" y="76" text-anchor="middle" fill="#4A392A" font-family="Arial, sans-serif" font-size="17" font-weight="700">Phong ngu master</text>
+    <text x="911" y="102" text-anchor="middle" fill="#6C5844" font-family="Arial, sans-serif" font-size="12">6.0m</text>
+
+    <polygon points="1037,0 1121,0 1121,184 1037,182" fill="#D8C7AF" stroke="#6C5844" stroke-width="3"/>
+    <text x="1079" y="80" text-anchor="middle" fill="#4A392A" font-family="Arial, sans-serif" font-size="15" font-weight="700">San sau</text>
+    <text x="1079" y="104" text-anchor="middle" fill="#6C5844" font-family="Arial, sans-serif" font-size="12">2.0m</text>
+  </g>
+
+  <text x="88" y="690" fill="#5B4737" font-family="Arial, sans-serif" font-size="24" font-weight="700">Luu y thiet ke</text>
+  <text x="88" y="728" fill="#6C5844" font-family="Arial, sans-serif" font-size="20">- Khong them gieng troi rieng; bo tri anh sang qua cua so, cua sau va san sau.</text>
+  <text x="88" y="760" fill="#6C5844" font-family="Arial, sans-serif" font-size="20">- Hai phong ngu nho duoc giu dung tinh chat nha hep, khong render thanh phong rong.</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" fill="#EEE3D0"/>
+  <rect x="106" y="80" width="988" height="730" rx="34" fill="#F8F1E6"/>
+  <path d="M328 294C328 258.654 356.654 230 392 230H808C843.346 230 872 258.654 872 294V694H328V294Z" fill="#FCF8F0"/>
+  <path d="M362 328C362 306.461 379.461 289 401 289H799C820.539 289 838 306.461 838 328V694H362V328Z" fill="#F4E7D3"/>
+  <rect x="436" y="354" width="82" height="252" rx="14" fill="#F8FBFD" stroke="#B3BEC7" stroke-width="6"/>
+  <rect x="526" y="354" width="82" height="252" rx="14" fill="#F8FBFD" stroke="#B3BEC7" stroke-width="6"/>
+  <rect x="616" y="354" width="82" height="252" rx="14" fill="#F8FBFD" stroke="#B3BEC7" stroke-width="6"/>
+  <rect x="706" y="354" width="82" height="252" rx="14" fill="#F8FBFD" stroke="#B3BEC7" stroke-width="6"/>
+  <rect x="328" y="694" width="544" height="52" fill="#DDC8A7"/>
+  <text x="106" y="136" fill="#5B4737" font-family="Arial, sans-serif" font-size="42" font-weight="700">Concept mat tien Japandi toi gian</text>
+  <text x="106" y="180" fill="#816A55" font-family="Arial, sans-serif" font-size="24">Tuong trang kem, cua Xingfa trang 4 canh, hien lui vao trong va bo cong nhe hai goc tren</text>
+  <text x="106" y="840" fill="#816A55" font-family="Arial, sans-serif" font-size="24">Goi y hinh khoi de tham khao phoi canh, khong phong dai thanh biet thu rong.</text>
+</svg>
