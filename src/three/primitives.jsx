@@ -17,14 +17,9 @@ export function Floor({ size, position, color = '#efe4d2' }) {
 }
 
 export function Wall({ size, position, color = '#fbfaf6' }) {
-  const [width, height, depth] = size
-  return (
-    <group position={position}>
-      <Box size={[width, height, depth]} position={[0, 0, 0]} color={color} />
-      <Box size={[width, 0.06, depth + 0.01]} position={[0, height / 2 - 0.03, 0]} color="#111111" />
-    </group>
-  )
+  return <Box size={size} position={position} color={color} />
 }
+
 
 export function GlassPanel({ size, position, color = '#dce9ee' }) {
   return <Box size={size} position={position} color={color} opacity={0.45} />
