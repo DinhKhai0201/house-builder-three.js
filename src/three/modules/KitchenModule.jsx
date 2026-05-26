@@ -1,5 +1,55 @@
-import { Box, Cabinet, Chair, Floor, Table, Wall } from '../primitives'
+import { Box, Cabinet, Floor, Wall } from '../primitives'
 import { avgWidth, roomCenterX } from '../roomUtils'
+
+// Bộ bàn ăn phong cách Japandi với mặt đá trắng và khung chân gỗ sồi sáng màu
+function DiningTable({ position, size }) {
+  const [w, h, d] = size // w: rộng (X), h: cao, d: dài (Z)
+  const oakColor = "#d6ae7b"
+  const legSize = 0.05
+  return (
+    <group position={position}>
+      {/* Mặt bàn đá trắng sang trọng */}
+      <Box size={[w, 0.03, d]} position={[0, 0.735, 0]} color="#ffffff" />
+      {/* Khung đỡ bằng gỗ sồi chạy dưới mặt bàn */}
+      <Box size={[w - 0.08, 0.05, d - 0.08]} position={[0, 0.695, 0]} color={oakColor} />
+      {/* 4 Chân bàn gỗ sồi vuông vắn vững chãi */}
+      <Box size={[legSize, 0.72, legSize]} position={[-w / 2 + legSize / 2 + 0.02, 0.36, -d / 2 + legSize / 2 + 0.02]} color={oakColor} />
+      <Box size={[legSize, 0.72, legSize]} position={[w / 2 - legSize / 2 - 0.02, 0.36, -d / 2 + legSize / 2 + 0.02]} color={oakColor} />
+      <Box size={[legSize, 0.72, legSize]} position={[-w / 2 + legSize / 2 + 0.02, 0.36, d / 2 - legSize / 2 - 0.02]} color={oakColor} />
+      <Box size={[legSize, 0.72, legSize]} position={[w / 2 - legSize / 2 - 0.02, 0.36, d / 2 - legSize / 2 - 0.02]} color={oakColor} />
+    </group>
+  )
+}
+
+// Ghế ăn Japandi phối nệm vải kem-beige tựa lưng bo nhẹ và khung chân gỗ sồi
+function DiningChair({ position, rotation }) {
+  const oakColor = "#d6ae7b"
+  const fabricColor = "#f5f2eb"
+  return (
+    <group position={position} rotation={rotation}>
+      {/* Đệm ngồi vải màu kem dầy dặn */}
+      <Box size={[0.42, 0.05, 0.42]} position={[0, 0.45, 0]} color={fabricColor} />
+      {/* Khung gỗ nâng đỡ dưới đệm */}
+      <Box size={[0.40, 0.04, 0.40]} position={[0, 0.415, 0]} color={oakColor} />
+      
+      {/* 4 Chân ghế gỗ sồi (2 chân sau hơi lùi góc) */}
+      <Box size={[0.03, 0.41, 0.03]} position={[0.17, 0.205, -0.17]} color={oakColor} />
+      <Box size={[0.03, 0.41, 0.03]} position={[0.17, 0.205, 0.17]} color={oakColor} />
+      <Box size={[0.03, 0.41, 0.03]} position={[-0.17, 0.205, -0.17]} color={oakColor} />
+      <Box size={[0.03, 0.41, 0.03]} position={[-0.17, 0.205, 0.17]} color={oakColor} />
+
+      {/* Thanh tựa lưng gỗ sồi đứng hai bên */}
+      <Box size={[0.03, 0.38, 0.03]} position={[-0.17, 0.62, -0.17]} color={oakColor} />
+      <Box size={[0.03, 0.38, 0.03]} position={[-0.17, 0.62, 0.17]} color={oakColor} />
+      
+      {/* Thanh giằng gỗ sồi ngang phía sau tựa lưng */}
+      <Box size={[0.02, 0.06, 0.34]} position={[-0.17, 0.51, 0]} color={oakColor} />
+
+      {/* Đệm tựa lưng bọc vải kem êm ái */}
+      <Box size={[0.04, 0.24, 0.35]} position={[-0.16, 0.70, 0]} color={fabricColor} />
+    </group>
+  )
+}
 
 export default function KitchenModule({ row }) {
   const width = avgWidth(row)
@@ -56,12 +106,17 @@ export default function KitchenModule({ row }) {
       {/* Kệ mở trang trí chạy dọc tường bếp sau - Tầng 2 (Y = 2.10m) */}
       <Box size={[3.0, 0.04, 0.24]} position={[roomStartX + depth - 1.5, 2.10, -width / 2 + 0.04 + 0.12]} color="#dcb58a" />
 
-      <Table position={[diningTableX, 0.04, width / 2 - 0.755]} size={[0.72, 0.08, 1.35]} />
-      {/* Ghế xếp 2 bên hông bàn (bên trái và bên phải) */}
-      <Chair position={[diningTableX - 0.52, 0.02, width / 2 - 0.755 - 0.35]} rotation={[0, Math.PI / 2, 0]} />
-      <Chair position={[diningTableX - 0.52, 0.02, width / 2 - 0.755 + 0.15]} rotation={[0, Math.PI / 2, 0]} />
-      <Chair position={[diningTableX + 0.52, 0.02, width / 2 - 0.755 - 0.35]} rotation={[0, -Math.PI / 2, 0]} />
-      <Chair position={[diningTableX + 0.52, 0.02, width / 2 - 0.755 + 0.15]} rotation={[0, -Math.PI / 2, 0]} />
+      {/* Bộ bàn ăn gỗ sồi mặt đá trắng tinh tế */}
+      <DiningTable position={[diningTableX, 0.04, width / 2 - 0.755]} size={[0.72, 0.08, 1.35]} />
+      
+      {/* Ghế ăn Japandi phối nệm vải kem-beige hai bên hông bàn */}
+      {/* Ghế bên trái bàn ăn (hướng mặt về phía bên phải / +X) */}
+      <DiningChair position={[diningTableX - 0.48, 0.04, width / 2 - 0.755 - 0.35]} rotation={[0, 0, 0]} />
+      <DiningChair position={[diningTableX - 0.48, 0.04, width / 2 - 0.755 + 0.15]} rotation={[0, 0, 0]} />
+      
+      {/* Ghế bên phải bàn ăn (hướng mặt về phía bên trái / -X) */}
+      <DiningChair position={[diningTableX + 0.48, 0.04, width / 2 - 0.755 - 0.35]} rotation={[0, Math.PI, 0]} />
+      <DiningChair position={[diningTableX + 0.48, 0.04, width / 2 - 0.755 + 0.15]} rotation={[0, Math.PI, 0]} />
     </group>
   )
 }
