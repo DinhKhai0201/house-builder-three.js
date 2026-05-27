@@ -27,24 +27,42 @@ function App() {
   const [firstPerson, setFirstPerson] = useState(false)
   const [focusRoom, setFocusRoom] = useState('living')
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isCssFullscreen, setIsCssFullscreen] = useState(false)
   const panelRef = useRef(null)
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement)
+      setIsFullscreen(!!document.fullscreenElement || !!document.webkitFullscreenElement)
     }
     document.addEventListener('fullscreenchange', handleFullscreenChange)
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange)
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange)
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
+    }
   }, [])
 
+  const isCurrentlyFullscreen = isFullscreen || isCssFullscreen
+
   const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      if (panelRef.current?.requestFullscreen) {
-        panelRef.current.requestFullscreen()
+    if (!isCurrentlyFullscreen) {
+      const el = panelRef.current
+      if (!el) return
+
+      if (el.requestFullscreen) {
+        el.requestFullscreen().catch(() => setIsCssFullscreen(true))
+      } else if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen()
+      } else {
+        setIsCssFullscreen(true)
       }
     } else {
-      if (document.exitFullscreen) {
+      if (isCssFullscreen) {
+        setIsCssFullscreen(false)
+      } else if (document.exitFullscreen) {
         document.exitFullscreen()
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen()
       }
     }
   }
@@ -102,7 +120,7 @@ function App() {
             <PremiumSwitch label="Mái nhà" checked={showRoof} onChange={setShowRoof} />
             <PremiumSwitch label="Nền dưới" checked={showLowerLevel} onChange={setShowLowerLevel} />
             <PremiumSwitch label="Tham quan" checked={firstPerson} onChange={setFirstPerson} />
-            {!isFullscreen && (
+            {!isCurrentlyFullscreen && (
               <button className="roof-toggle" onClick={toggleFullscreen}>
                 ⛶ Toàn màn hình
               </button>
@@ -138,8 +156,8 @@ function App() {
               </span>
             )}
           </div>
-          <div className="canvas-wrap" ref={panelRef} style={{ position: 'relative' }}>
-            {isFullscreen && (
+          <div className={`canvas-wrap ${isCssFullscreen ? 'css-fullscreen' : ''}`} ref={panelRef} style={{ position: 'relative' }}>
+            {isCurrentlyFullscreen && (
               <button
                 onClick={toggleFullscreen}
                 className="roof-toggle"

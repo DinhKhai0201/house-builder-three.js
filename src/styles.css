@@ -300,12 +300,17 @@ h2 {
   background: linear-gradient(180deg, #f6efe4, #ece1cf);
 }
 
-.canvas-wrap:fullscreen {
+.canvas-wrap:fullscreen,
+.canvas-wrap.css-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   margin: 0;
   border-radius: 0;
   border: none;
+  z-index: 9999;
 }
 
 .canvas-wrap canvas {
