@@ -42,6 +42,14 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (isCssFullscreen) {
+      document.body.classList.add('has-css-fullscreen')
+    } else {
+      document.body.classList.remove('has-css-fullscreen')
+    }
+  }, [isCssFullscreen])
+
   const isCurrentlyFullscreen = isFullscreen || isCssFullscreen
 
   const toggleFullscreen = () => {

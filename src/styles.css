@@ -58,6 +58,11 @@ body::before {
   margin-bottom: 20px;
 }
 
+body.has-css-fullscreen .panel {
+  backdrop-filter: none;
+  transform: none;
+}
+
 .eyebrow {
   margin: 0 0 14px;
   text-transform: uppercase;
