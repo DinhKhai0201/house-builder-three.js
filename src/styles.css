@@ -58,9 +58,30 @@ body::before {
   margin-bottom: 20px;
 }
 
-body.has-css-fullscreen .panel {
-  backdrop-filter: none;
-  transform: none;
+/* Fallback Fullscreen cho thiết bị di động (khi không hỗ trợ API chuẩn) */
+body.has-css-fullscreen {
+  overflow: hidden;
+}
+
+body.has-css-fullscreen .app-shell {
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+body.has-css-fullscreen .panel:not(.dark-panel),
+body.has-css-fullscreen .scene-toolbar {
+  display: none !important;
+}
+
+body.has-css-fullscreen .dark-panel {
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: black !important;
 }
 
 .eyebrow {
