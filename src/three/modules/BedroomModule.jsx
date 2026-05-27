@@ -32,22 +32,7 @@ export default function BedroomModule({ row, titleSide = 'left', hasDoor = true,
     <group>
       <Floor size={[depth, 0.06, width]} position={[centerX, 0.03, 0]} color="#efe2cf" />
       <Wall size={[depth, wallH, wallT]} position={[centerX, wallH / 2, -width / 2]} />
-      {hasCorridorWindow ? (
-        <group>
-          {/* Tường mảng dưới cửa sổ (ngoài) */}
-          <Wall size={[windowW, sillY, wallT]} position={[windowCenter, sillY / 2, width / 2]} />
-          {/* Tường mảng trên cửa sổ (ngoài) */}
-          <Wall size={[windowW, wallH - sillY - windowH, wallT]} position={[windowCenter, sillY + windowH + (wallH - sillY - windowH) / 2, width / 2]} />
-          {/* Tường mảng trái cửa sổ (ngoài) */}
-          <Wall size={[(windowCenter - windowW / 2) - (centerX - depth / 2), wallH, wallT]} position={[(centerX - depth / 2) + ((windowCenter - windowW / 2) - (centerX - depth / 2)) / 2, wallH / 2, width / 2]} />
-          {/* Tường mảng phải cửa sổ (ngoài) */}
-          <Wall size={[(centerX + depth / 2) - (windowCenter + windowW / 2), wallH, wallT]} position={[(windowCenter + windowW / 2) + ((centerX + depth / 2) - (windowCenter + windowW / 2)) / 2, wallH / 2, width / 2]} />
-          {/* Kính cửa sổ (ngoài) */}
-          <GlassPanel size={[windowW - 0.04, windowH - 0.04, 0.02]} position={[windowCenter, sillY + windowH / 2, width / 2]} color="#dfe5e6" />
-        </group>
-      ) : (
-        <Wall size={[depth, wallH, wallT]} position={[centerX, wallH / 2, width / 2]} />
-      )}
+      <Wall size={[depth, wallH, wallT]} position={[centerX, wallH / 2, width / 2]} />
       <Wall size={[wallT, wallH, mainWidth]} position={[centerX - depth / 2, wallH / 2, mainCenterZ]} />
       <Wall size={[wallT, wallH, mainWidth]} position={[centerX + depth / 2, wallH / 2, mainCenterZ]} />
       {leftWallWidth > 0 ? (
