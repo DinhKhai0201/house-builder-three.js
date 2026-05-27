@@ -31,6 +31,21 @@ export default function YardModule({ row, back = false }) {
       </group>
       {back ? (
         <group>
+          {/* Cục nóng điều hòa gắn tường bên trái (phía cửa sổ), hạ xuống Y=2.45 để không nhô lên khỏi mái */}
+          <group position={[centerX + 0.1, 2.45, -width / 2 + 0.125]}>
+            <Box size={[0.7, 0.5, 0.25]} position={[0, 0, 0]} color="#e0e2e5" />
+            <Cylinder position={[0.16, 0, 0.125]} radiusTop={0.18} radiusBottom={0.18} height={0.02} rotation={[Math.PI / 2, 0, 0]} color="#383838" />
+            <Box size={[0.5, 0.04, 0.1]} position={[0, -0.27, 0.05]} color="#b5b5b5" /> {/* Giá đỡ */}
+          </group>
+
+          {/* Máy giặt ở góc trái bên trong sân sau (phía cửa sổ) */}
+          <group position={[centerX - depth / 2 + 0.4, 0.45, -width / 2 + 0.4]}>
+            <Box size={[0.6, 0.85, 0.6]} position={[0, 0, 0]} color="#f2f4f7" />
+            {/* Lồng giặt hướng ra trước */}
+            <Cylinder position={[0, 0, 0.3]} radiusTop={0.22} radiusBottom={0.22} height={0.04} rotation={[Math.PI / 2, 0, 0]} color="#1f2226" />
+            <Box size={[0.5, 0.08, 0.5]} position={[0, 0.46, 0]} color="#d6d9dc" /> {/* Nắp trên */}
+          </group>
+
           {/* Ống thoát nước sân sau (30cm, góc dưới bên phải) */}
           <Cylinder position={[rearEdgeX + 0.1, 0.06, -width / 2 + 0.2]} radiusTop={0.03} radiusBottom={0.03} height={0.3} rotation={[0, 0, Math.PI / 2]} color="#6b6b68" />
           

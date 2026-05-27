@@ -13,7 +13,7 @@ export default function MasterModule({ row }) {
   const masterEntryWallWidth = width - corridorWidth
   const masterEntryCenterZ = -corridorWidth / 2
   const rearFaceX = centerX + depth / 2 - 0.02
-  const rearWindowCenterZ = -width / 2 + 0.79
+  const rearWindowCenterZ = -width / 2 + 0.89
   const rearDoorCenterZ = width / 2 - 0.56
   const rearDoorHeight = 2.34
   const rearWindowHeight = 1.44
@@ -108,6 +108,12 @@ export default function MasterModule({ row }) {
       {/* Gờ bê tông che mưa (ô văng) nhô ra 10cm phía trên cửa chính sân sau và cửa sổ */}
       <Box size={[0.18, 0.05, rearDoorWidth + 0.12]} position={[rearFaceX + 0.05, 2.37, rearDoorCenterZ]} color="#fbfaf6" />
       <Box size={[0.18, 0.05, rearWindowWidth + 0.12]} position={[rearFaceX + 0.05, 2.37, rearWindowCenterZ]} color="#fbfaf6" />
+
+      {/* Máy lạnh (điều hòa) nằm trên cửa sổ phòng master */}
+      <group position={[centerX + depth / 2 - 0.12, 2.65, rearWindowCenterZ]}>
+        <Box size={[0.2, 0.3, 0.9]} position={[0, 0, 0]} color="#f2f5f6" />
+        <Box size={[0.04, 0.04, 0.86]} position={[-0.1, -0.1, 0]} color="#2d2d2d" /> {/* Khe gió */}
+      </group>
 
       <Bed
         position={[centerX + 1.45, 0.04, -width / 2 + 1.02]}
