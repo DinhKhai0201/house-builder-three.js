@@ -199,8 +199,7 @@ export default function DetailedFloorPlan() {
           <path d={roomShape(front, 'full')} fill={ROOM_FILL.yard} stroke={OUTER_STROKE} strokeWidth="5" />
           <path d={roomShape(living, 'full')} fill={ROOM_FILL.public} stroke={OUTER_STROKE} strokeWidth="5" />
           <path d={roomShape(kitchen, 'full')} fill={ROOM_FILL.service} stroke={OUTER_STROKE} strokeWidth="5" />
-          <path d={roomShape(bed1, 'main')} fill={ROOM_FILL.bedroom} stroke={OUTER_STROKE} strokeWidth="5" />
-          <path d={roomShape(bed1, 'corridor')} fill={WALL} stroke={OUTER_STROKE} strokeWidth="5" />
+          <path d={roomShape(bed1, 'full')} fill={ROOM_FILL.bedroom} stroke={OUTER_STROKE} strokeWidth="5" />
           <path d={roomShape(bed2, 'main')} fill={ROOM_FILL.bedroom} stroke={OUTER_STROKE} strokeWidth="5" />
           <path d={roomShape(bed2, 'corridor')} fill={WALL} stroke={OUTER_STROKE} strokeWidth="5" />
           <path d={roomShape(wc, 'main')} fill={ROOM_FILL.bath} stroke={OUTER_STROKE} strokeWidth="5" />
@@ -216,8 +215,8 @@ export default function DetailedFloorPlan() {
           <text x={midX(kitchen) - 14} y={usableHeight(kitchen) / 2 - 54} textAnchor="middle" className="room-name">
             BẾP + ĂN
           </text>
-          <text x={midX(bed1)} y={usableHeight(bed1) / 2 + 6} textAnchor="middle" className="room-name small">
-            PHÒNG NGỦ 1
+          <text x={midX(bed1)} y={fullHeight(bed1) / 2} textAnchor="middle" className="room-name small">
+            PHÒNG ĐA NĂNG
           </text>
           <text x={midX(bed2)} y={usableHeight(bed2) / 2 + 6} textAnchor="middle" className="room-name small">
             PHÒNG NGỦ 2
@@ -240,7 +239,6 @@ export default function DetailedFloorPlan() {
           </text>
 
           <DoorSwing x={front.end * SCALE - 10} y={fullHeight(front) - 6} radius={58} direction={-1} flip={1} />
-          <DoorOpening x={bed1.start * SCALE + 12} y={fullHeight(bed1) - 6} width={28} />
           <DoorSwing x={bed2.start * SCALE + 20} y={fullHeight(bed2) - 6} radius={32} />
           <DoorSwing x={wc.start * SCALE + 20} y={fullHeight(wc) - 6} radius={30} />
 
