@@ -1,3 +1,5 @@
+import * as THREE from 'three'
+import { useMemo } from 'react'
 import { Box, Floor, Wall } from '../primitives'
 import DoorLeaf from '../DoorLeaf'
 import { avgWidth, mainRoomCenterZ, mainRoomWidth, roomCenterX } from '../roomUtils'
@@ -25,6 +27,34 @@ export default function BathModule({ row }) {
   const roomStartX = centerX - depth / 2
   const roomEndX = centerX + depth / 2
   const doorCenterX = roomStartX + lavaboZoneW + leftWallWidth + doorWidth / 2
+
+  // === Khung cửa vòm hành lang chổ lavabo ===
+  const archH = 2.18
+  const archR = 0.18
+  const rightPillarW = 0.1
+  const archXLeft = roomStartX
+  const archXRight = roomStartX + lavaboZoneW - rightPillarW
+  const archOpeningW = archXRight - archXLeft
+
+  const leftFilletShape = useMemo(() => {
+    const shape = new THREE.Shape()
+    const yLimit = archH - archR
+    shape.moveTo(archXLeft, yLimit)
+    shape.lineTo(archXLeft, archH)
+    shape.lineTo(archXLeft + archR, archH)
+    shape.absarc(archXLeft + archR, yLimit, archR, Math.PI / 2, Math.PI, false)
+    return shape
+  }, [archXLeft])
+
+  const rightFilletShape = useMemo(() => {
+    const shape = new THREE.Shape()
+    const yLimit = archH - archR
+    shape.moveTo(archXRight, yLimit)
+    shape.lineTo(archXRight, archH)
+    shape.lineTo(archXRight - archR, archH)
+    shape.absarc(archXRight - archR, yLimit, archR, Math.PI / 2, 0, true)
+    return shape
+  }, [archXRight])
 
   // Layout X coordinates
   const toiletX = roomStartX + 0.45
@@ -94,6 +124,18 @@ export default function BathModule({ row }) {
       <Wall size={[rightWallWidth, wallH, wallT]} position={[roomEndX - rightWallWidth / 2, wallH / 2, corridorDividerZ]} color="#fbfaf6" />
 
       {/* --- LAVABO AREA (In the recess, backing against Bedroom 2 wall) --- */}
+      {/* 0. Cửa vòm hành lang chổ lavabo */}
+      <Wall size={[rightPillarW, wallH, wallT]} position={[roomStartX + lavaboZoneW - rightPillarW / 2, wallH / 2, corridorDividerZ]} color="#fbfaf6" />
+      <Box size={[archOpeningW, wallH - archH, wallT]} position={[archXLeft + archOpeningW / 2, archH + (wallH - archH) / 2, corridorDividerZ]} color="#fbfaf6" />
+      <mesh position={[0, 0, corridorDividerZ - wallT / 2]} castShadow receiveShadow>
+        <extrudeGeometry args={[leftFilletShape, { depth: wallT, bevelEnabled: false, curveSegments: 32 }]} />
+        <meshStandardMaterial color="#fbfaf6" />
+      </mesh>
+      <mesh position={[0, 0, corridorDividerZ - wallT / 2]} castShadow receiveShadow>
+        <extrudeGeometry args={[rightFilletShape, { depth: wallT, bevelEnabled: false, curveSegments: 32 }]} />
+        <meshStandardMaterial color="#fbfaf6" />
+      </mesh>
+
       {/* 1. Bờ tường decor sát hành lang (Pony wall separating vanity from corridor) */}
       <Box size={[0.45, 1.1, 0.08]} position={[roomStartX + 0.225, 0.55, corridorDividerZ - 0.04]} color="#e3ddd5" />
       {/* Mặt đá của bờ tường (Ledge top) */}

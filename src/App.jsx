@@ -90,6 +90,7 @@ function App() {
           <span>Mặt tiền: 2.5m</span>
           <span>Nở hậu: 3.0m</span>
           <span>Hành lang: {corridorWidth}m</span>
+          <span>Chiều cao cửa phòng: 2.2m</span>
         </div>
       </section>
 
