@@ -63,7 +63,7 @@ export default function HouseModel({ showRoof = false, showLowerLevel = true, sh
       <LivingModule row={living} />
       <KitchenModule row={kitchen} />
       <BedroomModule row={bed1} empty hasDoor={false} noDividerWall />
-      <BedroomModule row={bed2} titleSide="right" bedWidth={1.1} bedDepth={1.75} hasCorridorWindow={false} />
+      <BedroomModule row={bed2} titleSide="right" bedWidth={1.1} bedDepth={1.75} hasCorridorWindow={true} />
       <BathModule row={wc} />
       <MasterModule row={master} />
       <YardModule row={backYard} back />

@@ -3,7 +3,7 @@ import DoorLeaf from '../DoorLeaf'
 import { avgWidth, mainRoomCenterZ, mainRoomWidth, roomCenterX } from '../roomUtils'
 import { corridorWidth } from '../../data/housePlan'
 
-export default function BedroomModule({ row, titleSide = 'left', hasDoor = true, empty = false, bedWidth = 1.28, bedDepth = 1.95, hasCorridorWindow = false, noDividerWall = false }) {
+export default function BedroomModule({ row, titleSide = 'left', hasDoor = true, empty = false, bedWidth = 1.28, bedDepth = 1.95, hasCorridorWindow = false, noDividerWall = false, windowW = 0.8, windowH = 1.0, sillY = 0.9 }) {
   const width = avgWidth(row)
   const depth = row.length
   const centerX = roomCenterX(row)
@@ -20,10 +20,7 @@ export default function BedroomModule({ row, titleSide = 'left', hasDoor = true,
   const rightWallWidth = depth - openingStart - doorWidth
   const openingCenterX = centerX - depth / 2 + openingStart + doorWidth / 2
   
-  // Thông số cửa sổ hành lang (chỉ mở khi có prop hasCorridorWindow)
-  const windowW = 1.0
-  const windowH = 1.2
-  const sillY = 0.9
+  // Thông số cửa sổ hành lang
   const wStart = centerX - depth / 2 + openingStart + doorWidth
   const windowCenter = wStart + rightWallWidth / 2
   const rightWallLeft_W = (windowCenter - windowW / 2) - wStart
@@ -57,8 +54,17 @@ export default function BedroomModule({ row, titleSide = 'left', hasDoor = true,
                 <Wall size={[rightWallLeft_W, wallH, wallT]} position={[wStart + rightWallLeft_W / 2, wallH / 2, corridorDividerZ]} color="#fbfaf6" />
                 {/* Tường mảng phải cửa sổ */}
                 <Wall size={[rightWallRight_W, wallH, wallT]} position={[windowCenter + windowW / 2 + rightWallRight_W / 2, wallH / 2, corridorDividerZ]} color="#fbfaf6" />
-                {/* Kính cửa sổ */}
-                <GlassPanel size={[windowW - 0.04, windowH - 0.04, 0.02]} position={[windowCenter, sillY + windowH / 2, corridorDividerZ]} color="#dfe5e6" />
+                {/* Khung viền cửa sổ */}
+                <Wall size={[windowW, 0.04, wallT + 0.02]} position={[windowCenter, sillY + 0.02, corridorDividerZ]} color="#3a3a3a" />
+                <Wall size={[windowW, 0.04, wallT + 0.02]} position={[windowCenter, sillY + windowH - 0.02, corridorDividerZ]} color="#3a3a3a" />
+                <Wall size={[0.04, windowH, wallT + 0.02]} position={[windowCenter - windowW / 2 + 0.02, sillY + windowH / 2, corridorDividerZ]} color="#3a3a3a" />
+                <Wall size={[0.04, windowH, wallT + 0.02]} position={[windowCenter + windowW / 2 - 0.02, sillY + windowH / 2, corridorDividerZ]} color="#3a3a3a" />
+                {/* 2 Cánh cửa lùa (Sliding glass panes) */}
+                <GlassPanel size={[windowW / 2, windowH - 0.08, 0.02]} position={[windowCenter - windowW / 4 + 0.01, sillY + windowH / 2, corridorDividerZ - 0.015]} color="#dfe5e6" />
+                <GlassPanel size={[windowW / 2, windowH - 0.08, 0.02]} position={[windowCenter + windowW / 4 - 0.01, sillY + windowH / 2, corridorDividerZ + 0.015]} color="#dfe5e6" />
+                {/* Khung dọc cánh lùa */}
+                <Wall size={[0.03, windowH - 0.08, 0.03]} position={[windowCenter, sillY + windowH / 2, corridorDividerZ - 0.015]} color="#3a3a3a" />
+                <Wall size={[0.03, windowH - 0.08, 0.03]} position={[windowCenter, sillY + windowH / 2, corridorDividerZ + 0.015]} color="#3a3a3a" />
               </group>
             ) : (
               <Wall
