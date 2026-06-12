@@ -20,7 +20,7 @@ export default function BathModule({ row }) {
   const lavaboDepth = 0.72
   const leftWallWidth = 0.05
   const rightWallWidth = depth - lavaboZoneW - leftWallWidth - doorWidth
-  
+
   const corridorCenterZ = width / 2 - corridorWidth / 2
   const roomStartX = centerX - depth / 2
   const roomEndX = centerX + depth / 2
@@ -80,7 +80,7 @@ export default function BathModule({ row }) {
       {/* --- CORRIDOR WALLS & DOOR (Separating WC from corridor) --- */}
       {/* Recess Back Wall for Lavabo */}
       <Wall size={[lavaboZoneW, wallH, wallT]} position={[roomStartX + lavaboZoneW / 2, wallH / 2, corridorDividerZ - lavaboDepth]} color="#fbfaf6" />
-      
+
       {/* Recess Side Wall */}
       <Wall size={[wallT, wallH, lavaboDepth + wallT]} position={[roomStartX + lavaboZoneW, wallH / 2, corridorDividerZ - lavaboDepth / 2]} color="#fbfaf6" />
 
@@ -109,7 +109,7 @@ export default function BathModule({ row }) {
         <cylinderGeometry args={[0.2, 0.14, 0.14, 32]} />
         <meshStandardMaterial color="#ffffff" roughness={0.1} />
       </mesh>
-      
+
       {/* Vòi nước (Faucet mounted on the bedroom wall) */}
       <Box size={[0.1, 0.03, 0.03]} position={[roomStartX + 0.05, 0.95, corridorDividerZ - 0.38]} color="#a1a5a8" />
       <Box size={[0.03, 0.1, 0.03]} position={[roomStartX + 0.08, 0.90, corridorDividerZ - 0.38]} color="#a1a5a8" />
