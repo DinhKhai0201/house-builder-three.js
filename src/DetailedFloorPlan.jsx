@@ -38,6 +38,10 @@ function usableHeight(row) {
   return row.corridor ? ((row.startWidth + row.endWidth) / 2 - corridorWidth) * SCALE : fullHeight(row)
 }
 
+function corridorStartY(row) {
+  return ((row.startWidth + row.endWidth) / 2 - corridorWidth) * SCALE
+}
+
 function midX(row) {
   return (row.start + row.length / 2) * SCALE
 }
@@ -46,13 +50,14 @@ function getRow(key) {
   return planRows.find((row) => row.key === key)
 }
 
-function DoorSwing({ x, y, radius, direction = 1, flip = 0 }) {
+function DoorSwing({ x, y, radius, direction = 1, flip = 0, upward = false }) {
   const endX = x + direction * radius
   const sweep = flip ? 0 : 1
+  const endY = upward ? y - radius : y + radius
   return (
     <g className="door-swing">
       <line x1={x} y1={y} x2={endX} y2={y} />
-      <path d={`M ${x} ${y} A ${radius} ${radius} 0 0 ${sweep} ${x} ${y + radius}`} />
+      <path d={`M ${x} ${y} A ${radius} ${radius} 0 0 ${sweep} ${x} ${endY}`} />
     </g>
   )
 }
@@ -130,37 +135,40 @@ function Furniture() {
       </text>
 
       <path
-        d={`M ${(kitchen.start + 0.15) * SCALE} 18 H ${(kitchen.end - 0.78) * SCALE} V 38 H ${(kitchen.end - 0.28) * SCALE} V 94 H ${(kitchen.end - 0.86) * SCALE} V 84 H ${(kitchen.start + 1.75) * SCALE} V 84 H ${(kitchen.start + 0.15) * SCALE} Z`}
+        d={`M ${(kitchen.start + 0.18) * SCALE} 18 H ${(kitchen.start + 3.55) * SCALE} V 40 H ${(kitchen.end - 0.28) * SCALE} V 98 H ${(kitchen.end - 0.80) * SCALE} V 82 H ${(kitchen.start + 1.78) * SCALE} V 82 H ${(kitchen.start + 0.18) * SCALE} Z`}
         className="countertop"
       />
       <rect x={(kitchen.start + 0.02) * SCALE} y={20} width={18} height={80} rx={3} className="fridge-block" />
       <rect x={(kitchen.start + 0.66) * SCALE} y={28} width={12} height={54} rx={3} className="water-filter" />
-      <circle cx={(kitchen.start + 2.75) * SCALE} cy={28} r="10" className="sink-bowl" />
+      <rect x={(kitchen.end - 0.76) * SCALE} y={32} width={18} height={52} rx={8} className="sink-bowl" />
       <rect
-        x={midX(kitchen) - 62}
-        y={kitchenHeight / 2 - 28}
+        x={(kitchen.start + 3.05) * SCALE}
+        y={kitchenHeight - 84}
         width={124}
         height={56}
         rx={6}
         className="furniture table"
       />
-      <rect x={midX(kitchen) - 48} y={kitchenHeight / 2 - 42} width={18} height={10} rx={4} className="chair" />
-      <rect x={midX(kitchen) + 30} y={kitchenHeight / 2 - 42} width={18} height={10} rx={4} className="chair" />
-      <rect x={midX(kitchen) - 48} y={kitchenHeight / 2 + 32} width={18} height={10} rx={4} className="chair" />
-      <rect x={midX(kitchen) + 30} y={kitchenHeight / 2 + 32} width={18} height={10} rx={4} className="chair" />
+      <rect x={(kitchen.start + 3.22) * SCALE} y={kitchenHeight - 98} width={18} height={10} rx={4} className="chair" />
+      <rect x={(kitchen.start + 4.08) * SCALE} y={kitchenHeight - 98} width={18} height={10} rx={4} className="chair" />
+      <rect x={(kitchen.start + 3.22) * SCALE} y={kitchenHeight - 20} width={18} height={10} rx={4} className="chair" />
+      <rect x={(kitchen.start + 4.08) * SCALE} y={kitchenHeight - 20} width={18} height={10} rx={4} className="chair" />
 
-      <rect x={midX(bed1) - 46} y={18} width={92} height={74} rx={8} className="furniture bed" />
-      <rect x={(bed1.end - 0.42) * SCALE} y={14} width={18} height={84} rx={3} className="wardrobe" />
+      <rect x={(bed1.start + 0.44) * SCALE} y={18} width={94} height={bed1Height - 44} rx={10} className="furniture table" opacity="0.22" />
+      <text x={midX(bed1)} y={bed1Height / 2 + 6} textAnchor="middle" className="fixture-label">
+        Không xây vách
+      </text>
 
       <rect x={midX(bed2) - 46} y={18} width={92} height={74} rx={8} className="furniture bed" />
       <rect x={(bed2.end - 0.42) * SCALE} y={14} width={18} height={84} rx={3} className="wardrobe" />
 
-      <circle cx={(wc.start + 0.28) * SCALE} cy={wcHeight - 24} r="12" className="bath-fixture" />
-      <text x={(wc.start + 0.28) * SCALE} y={wcHeight - 44} textAnchor="middle" className="fixture-label">
+      <rect x={(wc.start + 0.05) * SCALE} y={usableHeight(wc) - 0.69 * SCALE} width={14} height={0.5 * SCALE} rx={2} className="furniture console" opacity="0.8" />
+      <circle cx={(wc.start + 0.22) * SCALE} cy={usableHeight(wc) - 0.35 * SCALE} r="12" className="bath-fixture" />
+      <text x={(wc.start + 0.35) * SCALE} y={usableHeight(wc) - 0.35 * SCALE + 4} className="fixture-label">
         Lavabo
       </text>
-      <circle cx={(wc.start + 0.92) * SCALE} cy={wcHeight / 2 + 4} r="12" className="bath-fixture" />
-      <text x={(wc.start + 0.92) * SCALE} y={wcHeight / 2 - 18} textAnchor="middle" className="fixture-label">
+      <circle cx={(wc.start + 1.1) * SCALE} cy={wcHeight / 2 + 10} r="12" className="bath-fixture" />
+      <text x={(wc.start + 1.1) * SCALE} y={wcHeight / 2 - 12} textAnchor="middle" className="fixture-label">
         Bồn cầu
       </text>
       <rect x={(wc.end - 0.48) * SCALE} y={12} width={4} height={wcHeight - 24} className="glass-partition" />
@@ -200,10 +208,11 @@ export default function DetailedFloorPlan() {
           <path d={roomShape(living, 'full')} fill={ROOM_FILL.public} stroke={OUTER_STROKE} strokeWidth="5" />
           <path d={roomShape(kitchen, 'full')} fill={ROOM_FILL.service} stroke={OUTER_STROKE} strokeWidth="5" />
           <path d={roomShape(bed1, 'full')} fill={ROOM_FILL.bedroom} stroke={OUTER_STROKE} strokeWidth="5" />
+          <path d={roomShape(bed1, 'corridor')} fill={WALL} opacity="0.65" />
           <path d={roomShape(bed2, 'main')} fill={ROOM_FILL.bedroom} stroke={OUTER_STROKE} strokeWidth="5" />
           <path d={roomShape(bed2, 'corridor')} fill={WALL} stroke={OUTER_STROKE} strokeWidth="5" />
-          <path d={roomShape(wc, 'main')} fill={ROOM_FILL.bath} stroke={OUTER_STROKE} strokeWidth="5" />
-          <path d={roomShape(wc, 'corridor')} fill={WALL} stroke={OUTER_STROKE} strokeWidth="5" />
+          <path d={`M ${wc.start * SCALE} 0 L ${wc.end * SCALE} 0 L ${wc.end * SCALE} ${(wc.endWidth - corridorWidth) * SCALE} L ${(wc.start + 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * (1.0 / wc.length)) - corridorWidth) * SCALE} L ${(wc.start + 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * (1.0 / wc.length)) - corridorWidth - 0.72) * SCALE} L ${wc.start * SCALE} ${(wc.startWidth - corridorWidth - 0.72) * SCALE} Z`} fill={ROOM_FILL.bath} stroke={OUTER_STROKE} strokeWidth="5" />
+          <path d={`M ${wc.start * SCALE} ${(wc.startWidth - corridorWidth - 0.72) * SCALE} L ${(wc.start + 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * (1.0 / wc.length)) - corridorWidth - 0.72) * SCALE} L ${(wc.start + 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * (1.0 / wc.length)) - corridorWidth) * SCALE} L ${wc.end * SCALE} ${(wc.endWidth - corridorWidth) * SCALE} L ${wc.end * SCALE} ${wc.endWidth * SCALE} L ${wc.start * SCALE} ${wc.startWidth * SCALE} Z`} fill={WALL} stroke={OUTER_STROKE} strokeWidth="5" />
           <path d={roomShape(master, 'full')} fill={ROOM_FILL.master} stroke={OUTER_STROKE} strokeWidth="5" />
           <path d={roomShape(back, 'full')} fill={ROOM_FILL.yard} stroke={OUTER_STROKE} strokeWidth="5" />
 
@@ -215,8 +224,11 @@ export default function DetailedFloorPlan() {
           <text x={midX(kitchen) - 14} y={usableHeight(kitchen) / 2 - 54} textAnchor="middle" className="room-name">
             BẾP + ĂN
           </text>
-          <text x={midX(bed1)} y={fullHeight(bed1) / 2} textAnchor="middle" className="room-name small">
+          <text x={midX(bed1) - 18} y={usableHeight(bed1) / 2 - 10} textAnchor="middle" className="room-name small">
             PHÒNG ĐA NĂNG
+          </text>
+          <text x={midX(bed1) - 18} y={usableHeight(bed1) / 2 + 18} textAnchor="middle" className="fixture-label">
+            MỞ RA HÀNH LANG
           </text>
           <text x={midX(bed2)} y={usableHeight(bed2) / 2 + 6} textAnchor="middle" className="room-name small">
             PHÒNG NGỦ 2
@@ -234,13 +246,16 @@ export default function DetailedFloorPlan() {
             SÂN SAU
           </text>
 
-          <text x={midX(bed2) + 68} y={fullHeight(bed2) - 20} textAnchor="middle" className="corridor-note">
-            HÀNH LANG 0.8m
+          <text x={(bed1.start + 3.7) * SCALE} y={corridorStartY(bed1) + 44} textAnchor="middle" className="corridor-note">
+            HÀNH LANG {corridorWidth}m
           </text>
 
           <DoorSwing x={front.end * SCALE - 10} y={fullHeight(front) - 6} radius={58} direction={-1} flip={1} />
           <DoorSwing x={bed2.start * SCALE + 20} y={fullHeight(bed2) - 6} radius={32} />
-          <DoorSwing x={wc.start * SCALE + 20} y={fullHeight(wc) - 6} radius={30} />
+          <DoorSwing x={wc.start * SCALE + 20 + 1.0 * SCALE} y={corridorStartY(wc) - 2} radius={30} direction={-1} flip={0} upward />
+          <DoorSwing x={master.start * SCALE + 22} y={fullHeight(master) - 6} radius={34} />
+
+          <DoorOpening x={kitchen.end * SCALE - 4} y={corridorStartY(kitchen)} width={56} vertical />
 
           <WindowMark x={master.end * SCALE - 4} y={24} width={92} horizontal={false} />
 
@@ -259,7 +274,7 @@ export default function DetailedFloorPlan() {
 
           <line x1="0" y1={totalWidth + 24} x2={totalModeledLength * SCALE} y2={totalWidth + 24} className="dimension-line" />
           <text x="0" y={totalWidth + 54} className="dimension-label">
-            Chuỗi công năng mô phỏng: 26.7m
+            Chuỗi công năng mô phỏng: {totalModeledLength}m
           </text>
         </g>
       </svg>

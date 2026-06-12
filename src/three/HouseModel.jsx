@@ -7,9 +7,9 @@ import KitchenModule from './modules/KitchenModule'
 import LivingModule from './modules/LivingModule'
 import MasterModule from './modules/MasterModule'
 import YardModule from './modules/YardModule'
-import { Box, Cylinder } from './primitives'
+import { Box, Cylinder, WallContext } from './primitives'
 
-export default function HouseModel({ showRoof = false, showLowerLevel = true }) {
+export default function HouseModel({ showRoof = false, showLowerLevel = true, showLeftWall = true, showRightWall = true }) {
   const frontYard = getRow('front-yard')
   const living = getRow('living')
   const kitchen = getRow('kitchen')
@@ -20,7 +20,8 @@ export default function HouseModel({ showRoof = false, showLowerLevel = true }) 
   const backYard = getRow('back-yard')
 
   return (
-    <group position={[-13.35, 0, 0]}>
+    <WallContext.Provider value={{ showLeftWall, showRightWall }}>
+      <group position={[-13.35, 0, 0]}>
       {showLowerLevel ? (
         <group>
           {/* Phần mở rộng phía trước (đi từ đường/sân xe -> cầu thang -> sân trước và nhà) */}
@@ -67,7 +68,7 @@ export default function HouseModel({ showRoof = false, showLowerLevel = true }) 
       <MasterModule row={master} />
       <YardModule row={backYard} back />
       {showRoof ? <RoofSystem /> : null}
-      <HouseLabels />
-    </group>
+      </group>
+    </WallContext.Provider>
   )
 }

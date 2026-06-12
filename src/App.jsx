@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import HouseScene from './HouseScene'
 import DetailedFloorPlan from './DetailedFloorPlan'
 import SceneErrorBoundary from './SceneErrorBoundary'
-import { descriptionBlocks, estimatedSiteLength, keyNotes } from './data/housePlan'
+import { estimatedSiteLength, planRows, totalModeledLength, corridorWidth } from './data/housePlan'
 
 function PremiumSwitch({ label, checked, onChange }) {
   return (
@@ -24,6 +24,8 @@ function PremiumSwitch({ label, checked, onChange }) {
 function App() {
   const [showRoof, setShowRoof] = useState(false)
   const [showLowerLevel, setShowLowerLevel] = useState(false)
+  const [showLeftWall, setShowLeftWall] = useState(true)
+  const [showRightWall, setShowRightWall] = useState(true)
   const [firstPerson, setFirstPerson] = useState(false)
   const [focusRoom, setFocusRoom] = useState('living')
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -78,38 +80,57 @@ function App() {
   return (
     <main className="app-shell">
       <section className="panel intro-panel">
-        <p className="eyebrow">Phương án nhà cấp 4 nở hậu</p>
-        <h1>Thiết kế tối giản Japandi cho nhà hẹp 2.5m nở hậu 3.0m.</h1>
+        <p className="eyebrow">Thông số kích thước</p>
+        <h1>Chi tiết diện tích từ tổng thể đến từng phòng.</h1>
         <p className="lead">
-          Bản này chỉ giữ 3 phần cần thiết: mô tả phương án, bản vẽ 2D tiếng Việt và mô phỏng 3D có thể xoay. Tỷ lệ
-          nhà được giữ theo thực tế để tránh cảm giác rộng giả khi xem.
+          Dưới đây là bảng thống kê kích thước chi tiết dựa trên tỷ lệ nở hậu thực tế từ 2.5m đến 3.0m. Diện tích lọt lòng của các phòng đã được tính toán chính xác sau khi trừ đi hành lang giao thông.
         </p>
         <div className="intro-metrics">
-          <span>Mặt tiền 2.5m</span>
-          <span>Nở hậu 3.0m</span>
-          <span>Công năng mô phỏng 26.7m</span>
-          <span>Chiều dài đất dự kiến {estimatedSiteLength}m</span>
+          <span>Tổng chiều dài: {totalModeledLength}m</span>
+          <span>Mặt tiền: 2.5m</span>
+          <span>Nở hậu: 3.0m</span>
+          <span>Hành lang: {corridorWidth}m</span>
         </div>
       </section>
 
       <section className="panel description-panel">
         <div className="section-head">
-          <p className="eyebrow">Mô tả phương án</p>
-          <h2>Những ý chính cần giữ khi triển khai</h2>
+          <p className="eyebrow">Kích thước từng phần</p>
+          <h2>Diện tích và bề ngang lọt lòng</h2>
         </div>
         <div className="description-grid">
-          {descriptionBlocks.map((block) => (
-            <article className="description-card" key={block.title}>
-              <h3>{block.title}</h3>
-              <p>{block.text}</p>
-            </article>
-          ))}
+          {planRows.map((row) => {
+            const avgW = (row.startWidth + row.endWidth) / 2
+            const roomW = row.corridor ? avgW - corridorWidth : avgW
+            const area = (roomW * row.length).toFixed(1)
+            
+            return (
+              <article className="description-card" key={row.key}>
+                <h3 style={{ borderBottom: '1px solid rgba(0,0,0,0.05)', paddingBottom: '8px', marginBottom: '12px' }}>{row.label}</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.95rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: '#8b8476' }}>Chiều dài dọc nhà:</span>
+                    <span style={{ fontWeight: 500 }}>{row.length}m</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: '#8b8476' }}>Bề ngang lọt lòng:</span>
+                    <span style={{ fontWeight: 500 }}>{roomW.toFixed(2)}m</span>
+                  </div>
+                  {row.corridor && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#8b8476' }}>Hành lang:</span>
+                      <span style={{ fontWeight: 500 }}>{corridorWidth}m</span>
+                    </div>
+                  )}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px', paddingTop: '8px', borderTop: '1px dashed rgba(0,0,0,0.05)' }}>
+                    <span style={{ color: '#8b8476' }}>Diện tích khoảng:</span>
+                    <span style={{ fontWeight: 'bold', color: '#4a3f35' }}>~{area} m²</span>
+                  </div>
+                </div>
+              </article>
+            )
+          })}
         </div>
-        <ul className="note-list compact">
-          {keyNotes.map((note) => (
-            <li key={note}>{note}</li>
-          ))}
-        </ul>
       </section>
 
       <section className="panel">
@@ -127,6 +148,8 @@ function App() {
           <div className="scene-toolbar" style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
             <PremiumSwitch label="Mái nhà" checked={showRoof} onChange={setShowRoof} />
             <PremiumSwitch label="Nền dưới" checked={showLowerLevel} onChange={setShowLowerLevel} />
+            <PremiumSwitch label="Tường trái" checked={showLeftWall} onChange={setShowLeftWall} />
+            <PremiumSwitch label="Tường phải" checked={showRightWall} onChange={setShowRightWall} />
             <PremiumSwitch label="Tham quan" checked={firstPerson} onChange={setFirstPerson} />
             {!isCurrentlyFullscreen && (
               <button className="roof-toggle" onClick={toggleFullscreen}>
@@ -183,7 +206,7 @@ function App() {
               </button>
             )}
             <SceneErrorBoundary>
-              <HouseScene showRoof={showRoof} showLowerLevel={showLowerLevel} firstPerson={firstPerson} focusRoom={focusRoom} />
+              <HouseScene showRoof={showRoof} showLowerLevel={showLowerLevel} firstPerson={firstPerson} focusRoom={focusRoom} showLeftWall={showLeftWall} showRightWall={showRightWall} />
             </SceneErrorBoundary>
           </div>
         </article>

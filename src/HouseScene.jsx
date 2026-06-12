@@ -29,7 +29,7 @@ function CameraFocusController({ focusRoom, firstPerson }) {
   return null
 }
 
-export default function HouseScene({ showRoof, showLowerLevel, firstPerson = false, focusRoom = 'living' }) {
+export default function HouseScene({ showRoof, showLowerLevel, firstPerson = false, focusRoom = 'living', showLeftWall = true, showRightWall = true }) {
   const activeFocus = roomFocusPoints[focusRoom] || roomFocusPoints.living
 
   return (
@@ -44,7 +44,7 @@ export default function HouseScene({ showRoof, showLowerLevel, firstPerson = fal
         shadow-mapSize-height={2048}
       />
       <directionalLight position={[-6, 8, -6]} intensity={0.45} />
-      <HouseModel showRoof={showRoof} showLowerLevel={showLowerLevel} />
+      <HouseModel showRoof={showRoof} showLowerLevel={showLowerLevel} showLeftWall={showLeftWall} showRightWall={showRightWall} />
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.56, 0]} receiveShadow>
         <planeGeometry args={[64, 24]} />
         <meshStandardMaterial color="#c19563" />

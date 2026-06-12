@@ -1,6 +1,7 @@
 import { Bed, Cabinet, Floor, Wall, GlassPanel } from '../primitives'
 import DoorLeaf from '../DoorLeaf'
 import { avgWidth, mainRoomCenterZ, mainRoomWidth, roomCenterX } from '../roomUtils'
+import { corridorWidth } from '../../data/housePlan'
 
 export default function BedroomModule({ row, titleSide = 'left', hasDoor = true, empty = false, bedWidth = 1.28, bedDepth = 1.95, hasCorridorWindow = false, noDividerWall = false }) {
   const width = avgWidth(row)
@@ -8,12 +9,12 @@ export default function BedroomModule({ row, titleSide = 'left', hasDoor = true,
   const centerX = roomCenterX(row)
   const mainWidth = mainRoomWidth(row)
   const mainCenterZ = mainRoomCenterZ(row)
-  const corridorDividerZ = width / 2 - 0.8
+  const corridorDividerZ = width / 2 - corridorWidth
   const wallT = 0.08
   const wallH = 3.05
   const bedZ = titleSide === 'left' ? mainCenterZ + 0.05 : mainCenterZ - 0.05
   const doorWidth = 0.78
-  const doorHeight = 2.18
+  const doorHeight = 2.2
   const openingStart = 0.18
   const leftWallWidth = openingStart
   const rightWallWidth = depth - openingStart - doorWidth

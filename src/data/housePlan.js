@@ -1,11 +1,11 @@
 export const segments = [
-  { key: 'front-yard', label: 'Sân trước', length: 0.8, type: 'yard', corridor: false },
+  { key: 'front-yard', label: 'Sân trước', length: 1, type: 'yard', corridor: false },
   { key: 'living', label: 'Phòng khách + bàn thờ', length: 5, type: 'public', corridor: false },
   { key: 'kitchen', label: 'Bếp + ăn', length: 5.7, type: 'service', corridor: false },
-  { key: 'bed-1', label: 'Phòng đa năng', length: 2.7, type: 'bedroom', corridor: true },
-  { key: 'bed-2', label: 'Phòng ngủ 2', length: 2.7, type: 'bedroom', corridor: true },
-  { key: 'wc', label: 'WC + tắm', length: 1.8, type: 'bath', corridor: true },
-  { key: 'master', label: 'Phòng ngủ master', length: 6, type: 'master', corridor: false },
+  { key: 'bed-1', label: 'Phòng đa năng', length: 3.7, type: 'bedroom', corridor: true },
+  { key: 'bed-2', label: 'Phòng ngủ 2', length: 3.5, type: 'bedroom', corridor: true },
+  { key: 'wc', label: 'WC + tắm', length: 1.9, type: 'bath', corridor: true },
+  { key: 'master', label: 'Phòng ngủ master', length: 4, type: 'master', corridor: false },
   { key: 'back-yard', label: 'Sân sau', length: 2, type: 'yard', corridor: false },
 ]
 
@@ -16,7 +16,7 @@ export const widthAt = (distance) => {
   return frontWidth + ((rearWidth - frontWidth) * distance) / modeledLength
 }
 
-export const corridorWidth = 0.8
+export const corridorWidth = 0.7
 export const totalModeledLength = segments.reduce((sum, segment) => sum + segment.length, 0)
 export const estimatedSiteLength = 32
 export const scaleMetersToPixels = 28
