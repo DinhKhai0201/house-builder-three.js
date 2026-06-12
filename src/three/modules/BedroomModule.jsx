@@ -1,3 +1,5 @@
+import * as THREE from 'three'
+import { useMemo } from 'react'
 import { Bed, Cabinet, Floor, Wall, GlassPanel } from '../primitives'
 import DoorLeaf from '../DoorLeaf'
 import { avgWidth, mainRoomCenterZ, mainRoomWidth, roomCenterX } from '../roomUtils'
@@ -25,6 +27,31 @@ export default function BedroomModule({ row, titleSide = 'left', hasDoor = true,
   const windowCenter = wStart + rightWallWidth / 2
   const rightWallLeft_W = (windowCenter - windowW / 2) - wStart
   const rightWallRight_W = (wStart + rightWallWidth) - (windowCenter + windowW / 2)
+
+  // Arched fascia parameters
+  const archR = 0.18
+  const doorLeft = openingCenterX - doorWidth / 2
+  const doorRight = openingCenterX + doorWidth / 2
+
+  const leftFilletShape = useMemo(() => {
+    const shape = new THREE.Shape()
+    const yLimit = doorHeight - archR
+    shape.moveTo(doorLeft, yLimit)
+    shape.lineTo(doorLeft, doorHeight)
+    shape.lineTo(doorLeft + archR, doorHeight)
+    shape.absarc(doorLeft + archR, yLimit, archR, Math.PI / 2, Math.PI, false)
+    return shape
+  }, [doorLeft, doorHeight, archR])
+
+  const rightFilletShape = useMemo(() => {
+    const shape = new THREE.Shape()
+    const yLimit = doorHeight - archR
+    shape.moveTo(doorRight, yLimit)
+    shape.lineTo(doorRight, doorHeight)
+    shape.lineTo(doorRight - archR, doorHeight)
+    shape.absarc(doorRight - archR, yLimit, archR, Math.PI / 2, 0, true)
+    return shape
+  }, [doorRight, doorHeight, archR])
 
   return (
     <group>
@@ -76,6 +103,20 @@ export default function BedroomModule({ row, titleSide = 'left', hasDoor = true,
           ) : null}
           
           <Wall size={[doorWidth, wallH - doorHeight, wallT]} position={[openingCenterX, doorHeight + (wallH - doorHeight) / 2, corridorDividerZ]} color="#fbfaf6" />
+          
+          {/* Arched Fascia on Corridor Side */}
+          {hasDoor && !noDividerWall && (
+            <group>
+              <mesh position={[0, 0, corridorDividerZ]} castShadow receiveShadow>
+                <extrudeGeometry args={[leftFilletShape, { depth: wallT / 2, bevelEnabled: false, curveSegments: 32 }]} />
+                <meshStandardMaterial color="#fbfaf6" />
+              </mesh>
+              <mesh position={[0, 0, corridorDividerZ]} castShadow receiveShadow>
+                <extrudeGeometry args={[rightFilletShape, { depth: wallT / 2, bevelEnabled: false, curveSegments: 32 }]} />
+                <meshStandardMaterial color="#fbfaf6" />
+              </mesh>
+            </group>
+          )}
         </group>
       )}
 

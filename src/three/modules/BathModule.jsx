@@ -56,6 +56,30 @@ export default function BathModule({ row }) {
     return shape
   }, [archXRight])
 
+  // === Khung vòm giả cho cửa WC ===
+  const wcDoorLeft = doorCenterX - doorWidth / 2
+  const wcDoorRight = doorCenterX + doorWidth / 2
+
+  const wcLeftFilletShape = useMemo(() => {
+    const shape = new THREE.Shape()
+    const yLimit = doorHeight - archR
+    shape.moveTo(wcDoorLeft, yLimit)
+    shape.lineTo(wcDoorLeft, doorHeight)
+    shape.lineTo(wcDoorLeft + archR, doorHeight)
+    shape.absarc(wcDoorLeft + archR, yLimit, archR, Math.PI / 2, Math.PI, false)
+    return shape
+  }, [wcDoorLeft, doorHeight, archR])
+
+  const wcRightFilletShape = useMemo(() => {
+    const shape = new THREE.Shape()
+    const yLimit = doorHeight - archR
+    shape.moveTo(wcDoorRight, yLimit)
+    shape.lineTo(wcDoorRight, doorHeight)
+    shape.lineTo(wcDoorRight - archR, doorHeight)
+    shape.absarc(wcDoorRight - archR, yLimit, archR, Math.PI / 2, 0, true)
+    return shape
+  }, [wcDoorRight, doorHeight, archR])
+
   // Layout X coordinates
   const toiletX = roomStartX + 0.45
   const showerX = roomEndX - 0.45
@@ -119,6 +143,16 @@ export default function BathModule({ row }) {
 
       {/* Door Over-wall */}
       <Wall size={[doorWidth, wallH - doorHeight, wallT]} position={[doorCenterX, doorHeight + (wallH - doorHeight) / 2, corridorDividerZ]} color="#fbfaf6" />
+
+      {/* Arched Fascia on Corridor Side for WC Door */}
+      <mesh position={[0, 0, corridorDividerZ]} castShadow receiveShadow>
+        <extrudeGeometry args={[wcLeftFilletShape, { depth: wallT / 2, bevelEnabled: false, curveSegments: 32 }]} />
+        <meshStandardMaterial color="#fbfaf6" />
+      </mesh>
+      <mesh position={[0, 0, corridorDividerZ]} castShadow receiveShadow>
+        <extrudeGeometry args={[wcRightFilletShape, { depth: wallT / 2, bevelEnabled: false, curveSegments: 32 }]} />
+        <meshStandardMaterial color="#fbfaf6" />
+      </mesh>
 
       {/* Right wall after door */}
       <Wall size={[rightWallWidth, wallH, wallT]} position={[roomEndX - rightWallWidth / 2, wallH / 2, corridorDividerZ]} color="#fbfaf6" />

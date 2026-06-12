@@ -1,3 +1,5 @@
+import * as THREE from 'three'
+import { useMemo } from 'react'
 import { corridorWidth } from '../../data/housePlan'
 import { Bed, Box, Cabinet, Floor, GlassPanel, Table, Wall } from '../primitives'
 import { avgWidth, roomCenterX } from '../roomUtils'
@@ -20,6 +22,29 @@ export default function MasterModule({ row }) {
   const windowSillY = 0.9
   const doorHeight = 2.2
 
+  const archR = 0.18
+  const masterDoorZLeft = width / 2 - 0.8
+  const masterDoorZRight = width / 2
+
+  const masterLeftFilletShape = useMemo(() => {
+    const shape = new THREE.Shape()
+    const yLimit = doorHeight - archR
+    shape.moveTo(masterDoorZLeft, yLimit)
+    shape.lineTo(masterDoorZLeft, doorHeight)
+    shape.lineTo(masterDoorZLeft + archR, doorHeight)
+    shape.absarc(masterDoorZLeft + archR, yLimit, archR, Math.PI / 2, Math.PI, false)
+    return shape
+  }, [masterDoorZLeft, doorHeight, archR])
+
+  const masterRightFilletShape = useMemo(() => {
+    const shape = new THREE.Shape()
+    const yLimit = doorHeight - archR
+    shape.moveTo(masterDoorZRight, yLimit)
+    shape.lineTo(masterDoorZRight, doorHeight)
+    shape.lineTo(masterDoorZRight - archR, doorHeight)
+    shape.absarc(masterDoorZRight - archR, yLimit, archR, Math.PI / 2, 0, true)
+    return shape
+  }, [masterDoorZRight, doorHeight, archR])
 
   const rearOpenings = [
     { center: rearWindowCenterZ, width: rearWindowWidth },
@@ -45,6 +70,16 @@ export default function MasterModule({ row }) {
         position={[centerX - depth / 2, doorHeight + (wallH - doorHeight) / 2, width / 2 - 0.4]}
         color="#fbfaf6"
       />
+      {/* Arched Fascia for Master Door */}
+      <mesh position={[centerX - depth / 2, 0, 0]} rotation={[0, -Math.PI / 2, 0]} castShadow receiveShadow>
+        <extrudeGeometry args={[masterLeftFilletShape, { depth: wallT / 2, bevelEnabled: false, curveSegments: 32 }]} />
+        <meshStandardMaterial color="#fbfaf6" />
+      </mesh>
+      <mesh position={[centerX - depth / 2, 0, 0]} rotation={[0, -Math.PI / 2, 0]} castShadow receiveShadow>
+        <extrudeGeometry args={[masterRightFilletShape, { depth: wallT / 2, bevelEnabled: false, curveSegments: 32 }]} />
+        <meshStandardMaterial color="#fbfaf6" />
+      </mesh>
+
       <group position={[centerX - depth / 2, 0, width / 2]} rotation={[0, -0.8, 0]}>
         <Box
           size={[0.04, doorHeight, 0.72]}
