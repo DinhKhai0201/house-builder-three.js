@@ -104,7 +104,7 @@ function App() {
             const avgW = (row.startWidth + row.endWidth) / 2
             const roomW = row.corridor ? avgW - corridorWidth : avgW
             const area = (roomW * row.length).toFixed(1)
-            
+
             return (
               <article className="description-card" key={row.key}>
                 <h3 style={{ borderBottom: '1px solid rgba(0,0,0,0.05)', paddingBottom: '8px', marginBottom: '12px' }}>{row.label}</h3>

@@ -44,19 +44,21 @@ export default function RoofSystem() {
 
   return (
     <group>
+      {/* Mái tôn xốp PU (mặt dưới màu kem/trắng ngà thay thế cho la phông) */}
       <Box
         size={[roofPanelLength, 0.08, puRoofWidth]}
         position={[roofStart + roofPanelLength / 2, roofTopY - roofEdgeDrop / 2, 0]}
         rotation={[0, 0, 0.05]}
-        color="#2f6e6c"
+        color="#ebe5d9"
       />
       <Box
         size={[roofPanelLength, 0.08, puRoofWidth]}
         position={[roofEnd - roofPanelLength / 2, roofTopY - roofEdgeDrop / 2, 0]}
         rotation={[0, 0, -roofSlope]}
-        color="#2f6e6c"
+        color="#ebe5d9"
       />
-      <Box size={[0.08, 0.1, puRoofWidth]} position={[puRoofCenter, roofTopY + 0.01, 0]} color="#214b49" />
+      {/* Hệ vì kèo / xà gồ thép sơn màu gỗ sồi (Japandi exposed beams) */}
+      <Box size={[0.08, 0.1, puRoofWidth]} position={[puRoofCenter, roofTopY + 0.01, 0]} color="#c49461" />
 
       {frontSlabLength > 0 ? <Box size={[frontSlabLength, 0.2, slabWidth]} position={[slabStart + frontSlabLength / 2, 3.15, 0]} color="#f2f2f0" /> : null}
       {rearSlabLength > 0 ? <Box size={[rearSlabLength, 0.2, slabWidth]} position={[skylightCenterX + skylightLength / 2 + rearSlabLength / 2, 3.15, 0]} color="#f2f2f0" /> : null}
