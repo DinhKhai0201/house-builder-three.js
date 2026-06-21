@@ -28,57 +28,12 @@ export default function BathModule({ row }) {
   const roomEndX = centerX + depth / 2
   const doorCenterX = roomStartX + lavaboZoneW + leftWallWidth + doorWidth / 2
 
-  // === Khung cửa vòm hành lang chổ lavabo ===
+  // === Khung cửa hành lang chổ lavabo ===
   const archH = 2.18
-  const archR = 0.18
   const rightPillarW = 0.1
   const archXLeft = roomStartX
   const archXRight = roomStartX + lavaboZoneW - rightPillarW
   const archOpeningW = archXRight - archXLeft
-
-  const leftFilletShape = useMemo(() => {
-    const shape = new THREE.Shape()
-    const yLimit = archH - archR
-    shape.moveTo(archXLeft, yLimit)
-    shape.lineTo(archXLeft, archH)
-    shape.lineTo(archXLeft + archR, archH)
-    shape.absarc(archXLeft + archR, yLimit, archR, Math.PI / 2, Math.PI, false)
-    return shape
-  }, [archXLeft])
-
-  const rightFilletShape = useMemo(() => {
-    const shape = new THREE.Shape()
-    const yLimit = archH - archR
-    shape.moveTo(archXRight, yLimit)
-    shape.lineTo(archXRight, archH)
-    shape.lineTo(archXRight - archR, archH)
-    shape.absarc(archXRight - archR, yLimit, archR, Math.PI / 2, 0, true)
-    return shape
-  }, [archXRight])
-
-  // === Khung vòm giả cho cửa WC ===
-  const wcDoorLeft = doorCenterX - doorWidth / 2
-  const wcDoorRight = doorCenterX + doorWidth / 2
-
-  const wcLeftFilletShape = useMemo(() => {
-    const shape = new THREE.Shape()
-    const yLimit = doorHeight - archR
-    shape.moveTo(wcDoorLeft, yLimit)
-    shape.lineTo(wcDoorLeft, doorHeight)
-    shape.lineTo(wcDoorLeft + archR, doorHeight)
-    shape.absarc(wcDoorLeft + archR, yLimit, archR, Math.PI / 2, Math.PI, false)
-    return shape
-  }, [wcDoorLeft, doorHeight, archR])
-
-  const wcRightFilletShape = useMemo(() => {
-    const shape = new THREE.Shape()
-    const yLimit = doorHeight - archR
-    shape.moveTo(wcDoorRight, yLimit)
-    shape.lineTo(wcDoorRight, doorHeight)
-    shape.lineTo(wcDoorRight - archR, doorHeight)
-    shape.absarc(wcDoorRight - archR, yLimit, archR, Math.PI / 2, 0, true)
-    return shape
-  }, [wcDoorRight, doorHeight, archR])
 
   // Layout X coordinates
   const toiletX = roomStartX + 0.45
@@ -144,31 +99,13 @@ export default function BathModule({ row }) {
       {/* Door Over-wall */}
       <Wall size={[doorWidth, wallH - doorHeight, wallT]} position={[doorCenterX, doorHeight + (wallH - doorHeight) / 2, corridorDividerZ]} color="#fbfaf6" />
 
-      {/* Arched Fascia on Corridor Side for WC Door */}
-      <mesh position={[0, 0, corridorDividerZ]} castShadow receiveShadow>
-        <extrudeGeometry args={[wcLeftFilletShape, { depth: wallT / 2, bevelEnabled: false, curveSegments: 32 }]} />
-        <meshStandardMaterial color="#fbfaf6" />
-      </mesh>
-      <mesh position={[0, 0, corridorDividerZ]} castShadow receiveShadow>
-        <extrudeGeometry args={[wcRightFilletShape, { depth: wallT / 2, bevelEnabled: false, curveSegments: 32 }]} />
-        <meshStandardMaterial color="#fbfaf6" />
-      </mesh>
-
       {/* Right wall after door */}
       <Wall size={[rightWallWidth, wallH, wallT]} position={[roomEndX - rightWallWidth / 2, wallH / 2, corridorDividerZ]} color="#fbfaf6" />
 
       {/* --- LAVABO AREA (In the recess, backing against Bedroom 2 wall) --- */}
-      {/* 0. Cửa vòm hành lang chổ lavabo */}
+      {/* 0. Lối vào hành lang chổ lavabo */}
       <Wall size={[rightPillarW, wallH, wallT]} position={[roomStartX + lavaboZoneW - rightPillarW / 2, wallH / 2, corridorDividerZ]} color="#fbfaf6" />
       <Box size={[archOpeningW, wallH - archH, wallT]} position={[archXLeft + archOpeningW / 2, archH + (wallH - archH) / 2, corridorDividerZ]} color="#fbfaf6" />
-      <mesh position={[0, 0, corridorDividerZ - wallT / 2]} castShadow receiveShadow>
-        <extrudeGeometry args={[leftFilletShape, { depth: wallT, bevelEnabled: false, curveSegments: 32 }]} />
-        <meshStandardMaterial color="#fbfaf6" />
-      </mesh>
-      <mesh position={[0, 0, corridorDividerZ - wallT / 2]} castShadow receiveShadow>
-        <extrudeGeometry args={[rightFilletShape, { depth: wallT, bevelEnabled: false, curveSegments: 32 }]} />
-        <meshStandardMaterial color="#fbfaf6" />
-      </mesh>
 
       {/* 1. Bờ tường decor sát hành lang (Pony wall separating vanity from corridor) */}
       <Box size={[0.45, 1.1, 0.08]} position={[roomStartX + 0.225, 0.55, corridorDividerZ - 0.04]} color="#e3ddd5" />
@@ -214,17 +151,23 @@ export default function BathModule({ row }) {
       {/* --- SHOWER AREA (Inner Right Corner) --- */}
       {/* Shower floor area */}
       <Box size={[0.9, 0.05, 0.9]} position={[showerX, 0.04, showerZ]} color="#c6c2ba" />
-      {/* Glass partition dividing shower and WC */}
-      <mesh position={[roomEndX - 0.9, 1.0, showerZ]} castShadow receiveShadow>
-        <boxGeometry args={[0.02, 2.0, 0.9]} />
-        <meshStandardMaterial color="#c8dce6" transparent opacity={0.4} roughness={0.1} />
+      {/* Glass partition replaced by Curtain */}
+      {/* Shower Curtain Rod */}
+      <mesh position={[roomEndX - 0.9, 2.0, showerZ]} castShadow receiveShadow rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.015, 0.015, 0.9, 16]} />
+        <meshStandardMaterial color="#8d8c89" metalness={0.8} roughness={0.2} />
+      </mesh>
+      {/* Shower Curtain Fabric (partially open) */}
+      <mesh position={[roomEndX - 0.9, 1.05, showerZ - 0.05]} castShadow receiveShadow>
+        <boxGeometry args={[0.02, 1.9, 0.8]} />
+        <meshStandardMaterial color="#e8e4db" roughness={0.9} />
       </mesh>
       {/* Shower fixtures mounted on the right wall (roomEndX) */}
       <Box size={[0.04, 0.08, 0.04]} position={[roomEndX - 0.06, 1.0, showerZ]} color="#7d7d7a" />
       <Box size={[0.02, 0.4, 0.02]} position={[roomEndX - 0.1, 1.25, showerZ]} color="#8d8c89" />
       <Box size={[0.12, 0.02, 0.12]} position={[roomEndX - 0.14, 1.45, showerZ]} color="#b5b5b5" />
 
-      <DoorLeaf position={[doorCenterX - 0.32, 0, corridorDividerZ - 0.02]} width={0.64} inward />
+      <DoorLeaf position={[doorCenterX - 0.32, 0, corridorDividerZ + 0.02]} width={0.64} />
     </group>
   )
 }
