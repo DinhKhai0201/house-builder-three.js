@@ -102,33 +102,28 @@ export default function BathModule({ row }) {
       {/* Right wall after door */}
       <Wall size={[rightWallWidth, wallH, wallT]} position={[roomEndX - rightWallWidth / 2, wallH / 2, corridorDividerZ]} color="#fbfaf6" />
 
-      {/* --- LAVABO AREA (In the recess, backing against Bedroom 2 wall) --- */}
+      {/* --- LAVABO AREA (In the recess, facing the corridor) --- */}
       {/* 0. Lối vào hành lang chổ lavabo */}
       <Wall size={[rightPillarW, wallH, wallT]} position={[roomStartX + lavaboZoneW - rightPillarW / 2, wallH / 2, corridorDividerZ]} color="#fbfaf6" />
       <Box size={[archOpeningW, wallH - archH, wallT]} position={[archXLeft + archOpeningW / 2, archH + (wallH - archH) / 2, corridorDividerZ]} color="#fbfaf6" />
 
-      {/* 1. Bờ tường decor sát hành lang (Pony wall separating vanity from corridor) */}
-      <Box size={[0.45, 1.1, 0.08]} position={[roomStartX + 0.225, 0.55, corridorDividerZ - 0.04]} color="#e3ddd5" />
-      {/* Mặt đá của bờ tường (Ledge top) */}
-      <Box size={[0.47, 0.02, 0.1]} position={[roomStartX + 0.225, 1.11, corridorDividerZ - 0.04]} color="#c4bbaa" />
-
       {/* 2. Tủ gắn tường dưới lavabo (Floating vanity cabinet) */}
-      <Box size={[0.4, 0.35, 0.6]} position={[roomStartX + 0.2, 0.52, corridorDividerZ - 0.38]} color="#8c6b4a" />
+      <Box size={[0.8, 0.35, 0.45]} position={[roomStartX + 0.5, 0.52, corridorDividerZ - 0.45]} color="#8c6b4a" />
       {/* Mặt đá tủ lavabo (Vanity top) */}
-      <Box size={[0.42, 0.02, 0.62]} position={[roomStartX + 0.21, 0.70, corridorDividerZ - 0.38]} color="#f4f1eb" />
+      <Box size={[0.82, 0.02, 0.47]} position={[roomStartX + 0.5, 0.70, corridorDividerZ - 0.45]} color="#f4f1eb" />
 
       {/* Lavabo (Vessel bowl sink) */}
-      <mesh position={[roomStartX + 0.2, 0.78, corridorDividerZ - 0.38]} castShadow receiveShadow>
+      <mesh position={[roomStartX + 0.5, 0.78, corridorDividerZ - 0.45]} castShadow receiveShadow>
         <cylinderGeometry args={[0.2, 0.14, 0.14, 32]} />
         <meshStandardMaterial color="#ffffff" roughness={0.1} />
       </mesh>
 
-      {/* Vòi nước (Faucet mounted on the bedroom wall) */}
-      <Box size={[0.1, 0.03, 0.03]} position={[roomStartX + 0.05, 0.95, corridorDividerZ - 0.38]} color="#a1a5a8" />
-      <Box size={[0.03, 0.1, 0.03]} position={[roomStartX + 0.08, 0.90, corridorDividerZ - 0.38]} color="#a1a5a8" />
+      {/* Vòi nước (Faucet mounted on the back wall) */}
+      <Box size={[0.03, 0.03, 0.18]} position={[roomStartX + 0.5, 0.95, corridorDividerZ - 0.58]} color="#a1a5a8" />
+      <Box size={[0.03, 0.1, 0.03]} position={[roomStartX + 0.5, 0.90, corridorDividerZ - 0.66]} color="#a1a5a8" />
 
-      {/* 3. Gương decor tròn (Round decorative mirror) trên tường phòng ngủ */}
-      <group position={[roomStartX + 0.02, 1.55, corridorDividerZ - 0.38]} rotation={[0, 0, Math.PI / 2]}>
+      {/* 3. Gương decor tròn (Round decorative mirror) trên tường sau */}
+      <group position={[roomStartX + 0.5, 1.55, corridorDividerZ - 0.67]} rotation={[Math.PI / 2, 0, 0]}>
         {/* Mirror frame */}
         <mesh castShadow receiveShadow position={[0, -0.01, 0]}>
           <cylinderGeometry args={[0.3, 0.3, 0.02, 32]} />
