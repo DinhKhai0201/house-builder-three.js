@@ -98,7 +98,7 @@ export default function BedroomModule({ row, titleSide = 'left', hasDoor = true,
         <Cabinet position={[centerX + 0.72, 0, -width / 2 + 0.24]} size={[0.36, 1.75, 0.44]} color="#c89a68" />
       )}
       {hasDoor && !noDividerWall && (
-        <DoorLeaf position={[openingCenterX - doorWidth / 2, 0, corridorDividerZ + 0.02]} width={doorWidth} />
+        <DoorLeaf position={[openingCenterX - doorWidth / 2, 0, corridorDividerZ - 0.02]} width={doorWidth} inward />
       )}
     </group>
   )

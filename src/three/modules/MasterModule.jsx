@@ -47,7 +47,7 @@ export default function MasterModule({ row }) {
         color="#fbfaf6"
       />
 
-      <group position={[centerX - depth / 2 - 0.02, 0, width / 2]} rotation={[0, 1.2, 0]}>
+      <group position={[centerX - depth / 2 + 0.02, 0, width / 2]} rotation={[0, -0.8, 0]}>
         <Box
           size={[0.04, doorHeight, 0.72]}
           position={[0, doorHeight / 2, -0.36]}
