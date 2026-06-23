@@ -162,18 +162,20 @@ function Furniture() {
       <rect x={midX(bed2) - 46} y={18} width={92} height={74} rx={8} className="furniture bed" />
       <rect x={(bed2.end - 0.42) * SCALE} y={14} width={18} height={84} rx={3} className="wardrobe" />
 
-      <rect x={(wc.start + 0.05) * SCALE} y={usableHeight(wc) - 0.69 * SCALE} width={14} height={0.5 * SCALE} rx={2} className="furniture console" opacity="0.8" />
-      <circle cx={(wc.start + 0.22) * SCALE} cy={usableHeight(wc) - 0.35 * SCALE} r="12" className="bath-fixture" />
-      <text x={(wc.start + 0.35) * SCALE} y={usableHeight(wc) - 0.35 * SCALE + 4} className="fixture-label">
+      <rect x={(wc.end - 0.9) * SCALE} y={usableHeight(wc) - 0.69 * SCALE} width={0.8 * SCALE} height={14} rx={2} className="furniture console" opacity="0.8" />
+      <circle cx={(wc.end - 0.5) * SCALE} cy={usableHeight(wc) - 0.5 * SCALE} r="12" className="bath-fixture" />
+      <text x={(wc.end - 0.5) * SCALE} y={usableHeight(wc) - 0.2 * SCALE} textAnchor="middle" className="fixture-label">
         Lavabo
       </text>
-      <circle cx={(wc.start + 1.1) * SCALE} cy={wcHeight / 2 + 10} r="12" className="bath-fixture" />
-      <text x={(wc.start + 1.1) * SCALE} y={wcHeight / 2 - 12} textAnchor="middle" className="fixture-label">
+      
+      <circle cx={(wc.end - 0.45) * SCALE} cy={wcHeight / 2 + 10} r="12" className="bath-fixture" />
+      <text x={(wc.end - 0.45) * SCALE} y={wcHeight / 2 - 12} textAnchor="middle" className="fixture-label">
         Bồn cầu
       </text>
-      <rect x={(wc.end - 0.48) * SCALE} y={12} width={4} height={wcHeight - 24} className="glass-partition" />
-      <circle cx={(wc.end - 0.18) * SCALE} cy={wcHeight / 2} r="14" className="shower-head" />
-      <text x={(wc.end - 0.22) * SCALE} y={wcHeight / 2 - 22} textAnchor="middle" className="fixture-label">
+      
+      <rect x={(wc.start + 0.9) * SCALE} y={12} width={2} height={wcHeight - 24} className="glass-partition" strokeDasharray="4 2" />
+      <circle cx={(wc.start + 0.45) * SCALE} cy={wcHeight / 2} r="14" className="shower-head" />
+      <text x={(wc.start + 0.45) * SCALE} y={wcHeight / 2 - 22} textAnchor="middle" className="fixture-label">
         Tắm
       </text>
 
@@ -211,8 +213,8 @@ export default function DetailedFloorPlan() {
           <path d={roomShape(bed1, 'corridor')} fill={WALL} opacity="0.65" />
           <path d={roomShape(bed2, 'main')} fill={ROOM_FILL.bedroom} stroke={OUTER_STROKE} strokeWidth="5" />
           <path d={roomShape(bed2, 'corridor')} fill={WALL} stroke={OUTER_STROKE} strokeWidth="5" />
-          <path d={`M ${wc.start * SCALE} 0 L ${wc.end * SCALE} 0 L ${wc.end * SCALE} ${(wc.endWidth - corridorWidth) * SCALE} L ${(wc.start + 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * (1.0 / wc.length)) - corridorWidth) * SCALE} L ${(wc.start + 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * (1.0 / wc.length)) - corridorWidth - 0.72) * SCALE} L ${wc.start * SCALE} ${(wc.startWidth - corridorWidth - 0.72) * SCALE} Z`} fill={ROOM_FILL.bath} stroke={OUTER_STROKE} strokeWidth="5" />
-          <path d={`M ${wc.start * SCALE} ${(wc.startWidth - corridorWidth - 0.72) * SCALE} L ${(wc.start + 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * (1.0 / wc.length)) - corridorWidth - 0.72) * SCALE} L ${(wc.start + 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * (1.0 / wc.length)) - corridorWidth) * SCALE} L ${wc.end * SCALE} ${(wc.endWidth - corridorWidth) * SCALE} L ${wc.end * SCALE} ${wc.endWidth * SCALE} L ${wc.start * SCALE} ${wc.startWidth * SCALE} Z`} fill={WALL} stroke={OUTER_STROKE} strokeWidth="5" />
+          <path d={`M ${wc.start * SCALE} 0 L ${wc.end * SCALE} 0 L ${wc.end * SCALE} ${(wc.endWidth - corridorWidth - 0.72) * SCALE} L ${(wc.end - 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * ((wc.length - 1.0) / wc.length)) - corridorWidth - 0.72) * SCALE} L ${(wc.end - 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * ((wc.length - 1.0) / wc.length)) - corridorWidth) * SCALE} L ${wc.start * SCALE} ${(wc.startWidth - corridorWidth) * SCALE} Z`} fill={ROOM_FILL.bath} stroke={OUTER_STROKE} strokeWidth="5" />
+          <path d={`M ${wc.start * SCALE} ${(wc.startWidth - corridorWidth) * SCALE} L ${(wc.end - 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * ((wc.length - 1.0) / wc.length)) - corridorWidth) * SCALE} L ${(wc.end - 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * ((wc.length - 1.0) / wc.length)) - corridorWidth - 0.72) * SCALE} L ${wc.end * SCALE} ${(wc.endWidth - corridorWidth - 0.72) * SCALE} L ${wc.end * SCALE} ${wc.endWidth * SCALE} L ${wc.start * SCALE} ${wc.startWidth * SCALE} Z`} fill={WALL} stroke={OUTER_STROKE} strokeWidth="5" />
           <path d={roomShape(master, 'full')} fill={ROOM_FILL.master} stroke={OUTER_STROKE} strokeWidth="5" />
           <path d={roomShape(back, 'full')} fill={ROOM_FILL.yard} stroke={OUTER_STROKE} strokeWidth="5" />
 
@@ -252,7 +254,7 @@ export default function DetailedFloorPlan() {
 
           <DoorSwing x={front.end * SCALE - 10} y={fullHeight(front) - 6} radius={58} direction={-1} flip={1} />
           <DoorSwing x={bed2.start * SCALE + 20} y={fullHeight(bed2) - 6} radius={32} />
-          <DoorSwing x={wc.start * SCALE + 20 + 1.0 * SCALE} y={corridorStartY(wc) - 2} radius={30} direction={-1} flip={0} upward />
+          <DoorSwing x={wc.start * SCALE + 8} y={corridorStartY(wc) + 4} radius={30} direction={1} flip={0} upward={false} />
           <DoorSwing x={master.start * SCALE + 22} y={fullHeight(master) - 6} radius={34} />
 
           <DoorOpening x={kitchen.end * SCALE - 4} y={corridorStartY(kitchen)} width={56} vertical />
