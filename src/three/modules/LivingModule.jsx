@@ -130,10 +130,10 @@ export default function LivingModule({ row }) {
       </group>
       <Cabinet position={[centerX - 0.6, 0, -width / 2 + 0.25]} size={[1.2, 0.32, 0.3]} color="#c09467" />
       {/* Bức tường chia phòng khách và bếp sơn trắng, dịch lùi về sau sát tủ lạnh */}
-      <Wall size={[0.08, wallH, 1.1]} position={[centerX + 2.46, wallH / 2, -width / 2 + 0.55]} color="#fbfaf6" />
+      <Wall size={[0.08, wallH, 1.2]} position={[centerX + 2.46, wallH / 2, -width / 2 + 0.60]} color="#fbfaf6" />
 
       {/* Tủ thờ Japandi đứng bằng gỗ cao cấp đặt lưng vào tường */}
-      <group position={[centerX + 2.18, 0.03, -width / 2 + 0.55]}>
+      <group position={[centerX + 2.18, 0.03, -width / 2 + 0.60]}>
         {/* Vách ốp lưng gỗ sát tường */}
         <Box size={[0.02, 2.6, 0.8]} position={[0.26, 1.3, 0]} color="#7a5535" />
 

@@ -9,7 +9,7 @@ import MasterModule from './modules/MasterModule'
 import YardModule from './modules/YardModule'
 import { Box, Cylinder, WallContext } from './primitives'
 
-export default function HouseModel({ showRoof = false, showLowerLevel = true, showLeftWall = true, showRightWall = true }) {
+export default function HouseModel({ showRoof = false, showLowerLevel = true, showLeftWall = true, showRightWall = true, topDownView = false }) {
   const frontYard = getRow('front-yard')
   const living = getRow('living')
   const kitchen = getRow('kitchen')
@@ -20,7 +20,7 @@ export default function HouseModel({ showRoof = false, showLowerLevel = true, sh
   const backYard = getRow('back-yard')
 
   return (
-    <WallContext.Provider value={{ showLeftWall, showRightWall }}>
+    <WallContext.Provider value={{ showLeftWall, showRightWall, topDownView }}>
       <group position={[-13.35, 0, 0]}>
       {showLowerLevel ? (
         <group>

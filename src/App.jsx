@@ -27,6 +27,7 @@ function App() {
   const [showLeftWall, setShowLeftWall] = useState(true)
   const [showRightWall, setShowRightWall] = useState(true)
   const [firstPerson, setFirstPerson] = useState(false)
+  const [topDownView, setTopDownView] = useState(false)
   const [focusRoom, setFocusRoom] = useState('living')
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isCssFullscreen, setIsCssFullscreen] = useState(false)
@@ -137,8 +138,9 @@ function App() {
       <section className="panel">
         <article className="wide">
           <div className="section-head">
-            <p className="eyebrow">Bản vẽ 2D</p>
-            <h2>Mặt bằng chi tiết theo tỷ lệ nhà thực tế</h2>
+            <p className="eyebrow">Bản vẽ thiết kế</p>
+            <h2>Mặt bằng 2D chuẩn AutoCAD</h2>
+            <p className="scene-hint" style={{ marginTop: '8px' }}>Bản vẽ mặt bằng kiến trúc đen trắng chuẩn kỹ thuật, hiển thị lưới trục tọa độ và diện tích từng phòng. Dễ dàng in ấn và giao cho thầu thi công.</p>
           </div>
           <DetailedFloorPlan />
         </article>
@@ -151,7 +153,14 @@ function App() {
             <PremiumSwitch label="Nền dưới" checked={showLowerLevel} onChange={setShowLowerLevel} />
             <PremiumSwitch label="Tường trái" checked={showLeftWall} onChange={setShowLeftWall} />
             <PremiumSwitch label="Tường phải" checked={showRightWall} onChange={setShowRightWall} />
-            <PremiumSwitch label="Tham quan" checked={firstPerson} onChange={setFirstPerson} />
+            <PremiumSwitch label="Từ trên xuống" checked={topDownView} onChange={(val) => {
+              setTopDownView(val);
+              if(val) { setShowRoof(false); setFirstPerson(false); }
+            }} />
+            <PremiumSwitch label="Tham quan" checked={firstPerson} onChange={(val) => {
+              setFirstPerson(val);
+              if(val) setTopDownView(false);
+            }} />
             {!isCurrentlyFullscreen && (
               <button className="roof-toggle" onClick={toggleFullscreen}>
                 ⛶ Toàn màn hình
@@ -207,7 +216,7 @@ function App() {
               </button>
             )}
             <SceneErrorBoundary>
-              <HouseScene showRoof={showRoof} showLowerLevel={showLowerLevel} firstPerson={firstPerson} focusRoom={focusRoom} showLeftWall={showLeftWall} showRightWall={showRightWall} />
+              <HouseScene showRoof={showRoof} showLowerLevel={showLowerLevel} firstPerson={firstPerson} focusRoom={focusRoom} showLeftWall={showLeftWall} showRightWall={showRightWall} topDownView={topDownView} />
             </SceneErrorBoundary>
           </div>
         </article>

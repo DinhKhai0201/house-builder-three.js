@@ -1,12 +1,26 @@
 import { createContext, useContext } from 'react'
 
-export const WallContext = createContext({ showLeftWall: true, showRightWall: true })
+export const WallContext = createContext({ showLeftWall: true, showRightWall: true, topDownView: false })
 
 function defaultShadowProps() {
   return { castShadow: true, receiveShadow: true }
 }
 
-export function Box({ size, position, color, opacity = 1, rotation, children }) {
+export function Box({ size, position, color, opacity = 1, rotation, children, topColor }) {
+  if (topColor) {
+    return (
+      <mesh position={position} rotation={rotation} {...defaultShadowProps()}>
+        <boxGeometry args={size} />
+        <meshStandardMaterial attach="material-0" color={color} transparent={opacity < 1} opacity={opacity} />
+        <meshStandardMaterial attach="material-1" color={color} transparent={opacity < 1} opacity={opacity} />
+        <meshStandardMaterial attach="material-2" color={topColor} />
+        <meshStandardMaterial attach="material-3" color={color} transparent={opacity < 1} opacity={opacity} />
+        <meshStandardMaterial attach="material-4" color={color} transparent={opacity < 1} opacity={opacity} />
+        <meshStandardMaterial attach="material-5" color={color} transparent={opacity < 1} opacity={opacity} />
+        {children}
+      </mesh>
+    )
+  }
   return (
     <mesh position={position} rotation={rotation} {...defaultShadowProps()}>
       <boxGeometry args={size} />
@@ -21,11 +35,11 @@ export function Floor({ size, position, color = '#efe4d2' }) {
 }
 
 export function Wall({ size, position, color = '#fbfaf6' }) {
-  const { showLeftWall, showRightWall } = useContext(WallContext)
+  const { showLeftWall, showRightWall, topDownView } = useContext(WallContext)
   const z = position[2]
   if (!showLeftWall && z < -1.2) return null
   if (!showRightWall && z > 1.2) return null
-  return <Box size={size} position={position} color={color} />
+  return <Box size={size} position={position} color={color} topColor={topDownView ? '#111111' : undefined} />
 }
 
 export function GlassPanel({ size, position, color = '#dce9ee' }) {
