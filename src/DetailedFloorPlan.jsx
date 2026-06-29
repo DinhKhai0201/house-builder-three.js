@@ -162,9 +162,9 @@ function Furniture() {
       <rect x={midX(bed2) - 46} y={18} width={92} height={74} rx={8} className="furniture bed" />
       <rect x={(bed2.end - 0.42) * SCALE} y={14} width={18} height={84} rx={3} className="wardrobe" />
 
-      <rect x={(wc.end - 0.9) * SCALE} y={usableHeight(wc) - 0.69 * SCALE} width={0.8 * SCALE} height={14} rx={2} className="furniture console" opacity="0.8" />
-      <circle cx={(wc.end - 0.5) * SCALE} cy={usableHeight(wc) - 0.5 * SCALE} r="12" className="bath-fixture" />
-      <text x={(wc.end - 0.5) * SCALE} y={usableHeight(wc) - 0.2 * SCALE} textAnchor="middle" className="fixture-label">
+      <rect x={(wc.end - 0.8) * SCALE} y={usableHeight(wc) - 0.69 * SCALE} width={0.8 * SCALE} height={14} rx={2} className="furniture console" opacity="0.8" />
+      <circle cx={(wc.end - 0.4) * SCALE} cy={usableHeight(wc) - 0.5 * SCALE} r="12" className="bath-fixture" />
+      <text x={(wc.end - 0.4) * SCALE} y={usableHeight(wc) - 0.2 * SCALE} textAnchor="middle" className="fixture-label">
         Lavabo
       </text>
       

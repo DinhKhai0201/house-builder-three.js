@@ -18,8 +18,8 @@ export default function BathModule({ row }) {
   const roomBottomZ = mainCenterZ + mainWidth / 2
   const doorWidth = 0.72
   const doorHeight = 2.2
-  const lavaboZoneW = 1.0
-  const lavaboDepth = 0.72
+  const lavaboZoneW = 0.8
+  const lavaboDepth = 0.8
   const rightWallWidth = 0.05
   const leftWallWidth = depth - lavaboZoneW - rightWallWidth - doorWidth
 

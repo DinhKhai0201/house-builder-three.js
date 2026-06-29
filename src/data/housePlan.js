@@ -1,22 +1,20 @@
 export const segments = [
-  { key: 'front-yard', label: 'Sân trước', length: 1, type: 'yard', corridor: false },
+  { key: 'front-yard', label: 'Sân trước', length: 1.5, type: 'yard', corridor: false },
   { key: 'living', label: 'Phòng khách + bàn thờ', length: 5, type: 'public', corridor: false },
-  { key: 'kitchen', label: 'Bếp + ăn', length: 5.7, type: 'service', corridor: false },
+  { key: 'kitchen', label: 'Bếp + ăn', length: 3.97, type: 'service', corridor: false },
   { key: 'bed-1', label: 'Phòng đa năng', length: 3.7, type: 'bedroom', corridor: true },
-  { key: 'bed-2', label: 'Phòng ngủ 2', length: 3.5, type: 'bedroom', corridor: true },
-  { key: 'wc', label: 'WC + tắm', length: 1.9, type: 'bath', corridor: true },
-  { key: 'master', label: 'Phòng ngủ master', length: 4, type: 'master', corridor: false },
+  { key: 'bed-2', label: 'Phòng ngủ 2', length: 3.7, type: 'bedroom', corridor: true },
+  { key: 'wc', label: 'WC + tắm', length: 2, type: 'bath', corridor: true },
+  { key: 'master', label: 'Phòng ngủ master', length: 5.5, type: 'master', corridor: false },
   { key: 'back-yard', label: 'Sân sau', length: 2, type: 'yard', corridor: false },
 ]
 
 export const widthAt = (distance) => {
-  const frontWidth = 2.5
-  const rearWidth = 3
-  const modeledLength = totalModeledLength
-  return frontWidth + ((rearWidth - frontWidth) * distance) / modeledLength
+  // Tổng chiều rộng nhà dựa trên chiều rộng Bếp/Phòng (2.37m) + Hành lang (0.75m)
+  return 3.12
 }
 
-export const corridorWidth = 0.7
+export const corridorWidth = 0.75
 export const totalModeledLength = segments.reduce((sum, segment) => sum + segment.length, 0)
 export const estimatedSiteLength = 32
 export const scaleMetersToPixels = 28
