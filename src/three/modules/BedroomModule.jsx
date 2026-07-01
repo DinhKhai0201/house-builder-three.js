@@ -22,11 +22,17 @@ export default function BedroomModule({ row, titleSide = 'left', hasDoor = true,
   const rightWallWidth = depth - openingStart - doorWidth
   const openingCenterX = centerX - depth / 2 + openingStart + doorWidth / 2
   
-  // Thông số cửa sổ hành lang
+  // Thông số 2 cửa sổ lật trên cao
   const wStart = centerX - depth / 2 + openingStart + doorWidth
-  const windowCenter = wStart + rightWallWidth / 2
-  const rightWallLeft_W = (windowCenter - windowW / 2) - wStart
-  const rightWallRight_W = (wStart + rightWallWidth) - (windowCenter + windowW / 2)
+  const w1Center = wStart + rightWallWidth * 0.28
+  const w2Center = wStart + rightWallWidth * 0.72
+  const smallW = 0.4
+  const smallH = 0.4
+  const smallSill = 2.5 // Cao độ bậu cửa, trần 3.05m -> cửa từ 2.5m đến 2.9m
+
+  const leftPillarW = w1Center - smallW / 2 - wStart
+  const midPillarW = w2Center - smallW / 2 - (w1Center + smallW / 2)
+  const rightPillarW = (wStart + rightWallWidth) - (w2Center + smallW / 2)
 
   return (
     <group>
@@ -48,25 +54,35 @@ export default function BedroomModule({ row, titleSide = 'left', hasDoor = true,
           {rightWallWidth > 0 ? (
             hasCorridorWindow ? (
               <group>
-                {/* Tường mảng dưới cửa sổ */}
-                <Wall size={[windowW, sillY, wallT]} position={[windowCenter, sillY / 2, corridorDividerZ]} color="#fbfaf6" />
-                {/* Tường mảng trên cửa sổ */}
-                <Wall size={[windowW, wallH - sillY - windowH, wallT]} position={[windowCenter, sillY + windowH + (wallH - sillY - windowH) / 2, corridorDividerZ]} color="#fbfaf6" />
-                {/* Tường mảng trái cửa sổ */}
-                <Wall size={[rightWallLeft_W, wallH, wallT]} position={[wStart + rightWallLeft_W / 2, wallH / 2, corridorDividerZ]} color="#fbfaf6" />
-                {/* Tường mảng phải cửa sổ */}
-                <Wall size={[rightWallRight_W, wallH, wallT]} position={[windowCenter + windowW / 2 + rightWallRight_W / 2, wallH / 2, corridorDividerZ]} color="#fbfaf6" />
-                {/* Khung viền cửa sổ */}
-                <Wall size={[windowW, 0.04, wallT + 0.02]} position={[windowCenter, sillY + 0.02, corridorDividerZ]} color="#3a3a3a" />
-                <Wall size={[windowW, 0.04, wallT + 0.02]} position={[windowCenter, sillY + windowH - 0.02, corridorDividerZ]} color="#3a3a3a" />
-                <Wall size={[0.04, windowH, wallT + 0.02]} position={[windowCenter - windowW / 2 + 0.02, sillY + windowH / 2, corridorDividerZ]} color="#3a3a3a" />
-                <Wall size={[0.04, windowH, wallT + 0.02]} position={[windowCenter + windowW / 2 - 0.02, sillY + windowH / 2, corridorDividerZ]} color="#3a3a3a" />
-                {/* 2 Cánh cửa lùa (Sliding glass panes) */}
-                <GlassPanel size={[windowW / 2, windowH - 0.08, 0.02]} position={[windowCenter - windowW / 4 + 0.01, sillY + windowH / 2, corridorDividerZ - 0.015]} color="#dfe5e6" />
-                <GlassPanel size={[windowW / 2, windowH - 0.08, 0.02]} position={[windowCenter + windowW / 4 - 0.01, sillY + windowH / 2, corridorDividerZ + 0.015]} color="#dfe5e6" />
-                {/* Khung dọc cánh lùa */}
-                <Wall size={[0.03, windowH - 0.08, 0.03]} position={[windowCenter, sillY + windowH / 2, corridorDividerZ - 0.015]} color="#3a3a3a" />
-                <Wall size={[0.03, windowH - 0.08, 0.03]} position={[windowCenter, sillY + windowH / 2, corridorDividerZ + 0.015]} color="#3a3a3a" />
+                {/* Tường mảng dưới 2 cửa sổ */}
+                <Wall size={[rightWallWidth, smallSill, wallT]} position={[wStart + rightWallWidth / 2, smallSill / 2, corridorDividerZ]} color="#fbfaf6" />
+                {/* Tường mảng trên 2 cửa sổ */}
+                <Wall size={[rightWallWidth, wallH - smallSill - smallH, wallT]} position={[wStart + rightWallWidth / 2, smallSill + smallH + (wallH - smallSill - smallH) / 2, corridorDividerZ]} color="#fbfaf6" />
+                
+                {/* 3 trụ tường giữa và hai bên cửa sổ */}
+                <Wall size={[leftPillarW, smallH, wallT]} position={[wStart + leftPillarW / 2, smallSill + smallH / 2, corridorDividerZ]} color="#fbfaf6" />
+                <Wall size={[midPillarW, smallH, wallT]} position={[w1Center + smallW / 2 + midPillarW / 2, smallSill + smallH / 2, corridorDividerZ]} color="#fbfaf6" />
+                <Wall size={[rightPillarW, smallH, wallT]} position={[w2Center + smallW / 2 + rightPillarW / 2, smallSill + smallH / 2, corridorDividerZ]} color="#fbfaf6" />
+                
+                {[w1Center, w2Center].map((cx, idx) => (
+                  <group key={idx}>
+                    {/* Khung viền cửa sổ */}
+                    <Wall size={[smallW, 0.04, wallT + 0.02]} position={[cx, smallSill + 0.02, corridorDividerZ]} color="#3a3a3a" />
+                    <Wall size={[smallW, 0.04, wallT + 0.02]} position={[cx, smallSill + smallH - 0.02, corridorDividerZ]} color="#3a3a3a" />
+                    <Wall size={[0.04, smallH, wallT + 0.02]} position={[cx - smallW / 2 + 0.02, smallSill + smallH / 2, corridorDividerZ]} color="#3a3a3a" />
+                    <Wall size={[0.04, smallH, wallT + 0.02]} position={[cx + smallW / 2 - 0.02, smallSill + smallH / 2, corridorDividerZ]} color="#3a3a3a" />
+                    
+                    {/* Cửa hất (Awning window) - Xoay mở ra ngoài hành lang một góc nhỏ */}
+                    <group position={[cx, smallSill + smallH - 0.04, corridorDividerZ + 0.02]} rotation={[-0.4, 0, 0]}>
+                      <GlassPanel size={[smallW - 0.08, smallH - 0.08, 0.02]} position={[0, -(smallH - 0.08) / 2, 0]} color="#dfe5e6" />
+                      {/* Khung cánh cửa */}
+                      <Wall size={[smallW - 0.04, 0.03, 0.03]} position={[0, 0, 0]} color="#2a2a2a" />
+                      <Wall size={[smallW - 0.04, 0.03, 0.03]} position={[0, -(smallH - 0.08), 0]} color="#2a2a2a" />
+                      <Wall size={[0.03, smallH - 0.08, 0.03]} position={[-(smallW - 0.04) / 2 + 0.015, -(smallH - 0.08) / 2, 0]} color="#2a2a2a" />
+                      <Wall size={[0.03, smallH - 0.08, 0.03]} position={[(smallW - 0.04) / 2 - 0.015, -(smallH - 0.08) / 2, 0]} color="#2a2a2a" />
+                    </group>
+                  </group>
+                ))}
               </group>
             ) : (
               <Wall
