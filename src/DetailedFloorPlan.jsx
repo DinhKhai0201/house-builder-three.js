@@ -108,6 +108,7 @@ export default function DetailedFloorPlan() {
   const kitchen = getRow('kitchen')
   const bed1 = getRow('bed-1')
   const bed2 = getRow('bed-2')
+  const lavabo = getRow('lavabo')
   const wc = getRow('wc')
   const master = getRow('master')
   const back = getRow('back-yard')
@@ -115,6 +116,10 @@ export default function DetailedFloorPlan() {
   const totalWidth = Math.max(...planRows.map((row) => row.endWidth)) * SCALE
   const viewW = totalModeledLength * SCALE + 280
   const viewH = totalWidth + 200
+  const corridorStart = bed1.start * SCALE
+  const corridorEnd = wc.end * SCALE
+  const corridorTop = (bed1.startWidth - corridorWidth) * SCALE
+  const corridorBottom = bed1.startWidth * SCALE
 
   return (
     <div className="detailed-plan-card">
@@ -154,16 +159,17 @@ export default function DetailedFloorPlan() {
           <path d={roomShape(front, 'full')} fill={ROOM_FILL.yard} stroke={OUTER_STROKE} strokeWidth="6" />
           <path d={roomShape(living, 'full')} fill={ROOM_FILL.public} stroke={OUTER_STROKE} strokeWidth="6" />
           <path d={roomShape(kitchen, 'full')} fill={ROOM_FILL.service} stroke={OUTER_STROKE} strokeWidth="6" />
-          <path d={roomShape(bed1, 'full')} fill={ROOM_FILL.bedroom} stroke={OUTER_STROKE} strokeWidth="6" />
-          <path d={roomShape(bed1, 'corridor')} fill="#ffffff" stroke={OUTER_STROKE} strokeWidth="6" />
+          <path d={roomShape(bed1, 'main')} fill={ROOM_FILL.bedroom} stroke={OUTER_STROKE} strokeWidth="6" />
           <path d={roomShape(bed2, 'main')} fill={ROOM_FILL.bedroom} stroke={OUTER_STROKE} strokeWidth="6" />
-          <path d={roomShape(bed2, 'corridor')} fill="#ffffff" stroke={OUTER_STROKE} strokeWidth="6" />
-          <path d={`M ${wc.start * SCALE} 0 L ${wc.end * SCALE} 0 L ${wc.end * SCALE} ${(wc.endWidth - corridorWidth - 0.72) * SCALE} L ${(wc.end - 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * ((wc.length - 1.0) / wc.length)) - corridorWidth - 0.72) * SCALE} L ${(wc.end - 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * ((wc.length - 1.0) / wc.length)) - corridorWidth) * SCALE} L ${wc.start * SCALE} ${(wc.startWidth - corridorWidth) * SCALE} Z`} fill={ROOM_FILL.bath} stroke={OUTER_STROKE} strokeWidth="6" />
-          <path d={`M ${wc.start * SCALE} ${(wc.startWidth - corridorWidth) * SCALE} L ${(wc.end - 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * ((wc.length - 1.0) / wc.length)) - corridorWidth) * SCALE} L ${(wc.end - 1.0) * SCALE} ${((wc.startWidth + (wc.endWidth - wc.startWidth) * ((wc.length - 1.0) / wc.length)) - corridorWidth - 0.72) * SCALE} L ${wc.end * SCALE} ${(wc.endWidth - corridorWidth - 0.72) * SCALE} L ${wc.end * SCALE} ${wc.endWidth * SCALE} L ${wc.start * SCALE} ${wc.startWidth * SCALE} Z`} fill="#ffffff" stroke={OUTER_STROKE} strokeWidth="6" />
+          <path d={roomShape(lavabo, 'full')} fill="#ffffff" />
+          <path d={roomShape(wc, 'main')} fill={ROOM_FILL.bath} stroke={OUTER_STROKE} strokeWidth="6" />
+          <rect x={corridorStart} y={corridorTop} width={corridorEnd - corridorStart} height={corridorBottom - corridorTop} fill="#ffffff" />
+          <line x1={corridorStart} y1={corridorTop} x2={corridorEnd} y2={corridorTop} stroke={OUTER_STROKE} strokeWidth="6" />
+          <line x1={corridorStart} y1={corridorBottom} x2={corridorEnd} y2={corridorBottom} stroke={OUTER_STROKE} strokeWidth="6" />
           <path d={roomShape(master, 'full')} fill={ROOM_FILL.master} stroke={OUTER_STROKE} strokeWidth="6" />
           <path d={roomShape(back, 'full')} fill={ROOM_FILL.yard} stroke={OUTER_STROKE} strokeWidth="6" />
 
-          {planRows.map(row => {
+          {planRows.filter((row) => row.key !== 'lavabo').map(row => {
             const w = row.corridor ? (row.startWidth + row.endWidth) / 2 - corridorWidth : (row.startWidth + row.endWidth) / 2;
             return (
               <g key={`text-${row.key}`}>
@@ -176,6 +182,14 @@ export default function DetailedFloorPlan() {
               </g>
             )
           })}
+          <g transform={`rotate(-90 ${midX(lavabo)} ${fullHeight(lavabo) / 2})`}>
+            <text x={midX(lavabo)} y={fullHeight(lavabo) / 2 - 7} textAnchor="middle" className="room-name" fill="#000" fontWeight="bold">
+              LAVABO
+            </text>
+            <text x={midX(lavabo)} y={fullHeight(lavabo) / 2 + 13} textAnchor="middle" className="fixture-label" fill="#000">
+              (0.9m x 3.00m)
+            </text>
+          </g>
 
           <DoorSwing x={front.end * SCALE - 10} y={fullHeight(front) - 6} radius={58} direction={-1} flip={1} />
           <DoorSwing x={bed2.start * SCALE + 20} y={fullHeight(bed2) - 6} radius={32} />

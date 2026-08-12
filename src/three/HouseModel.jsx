@@ -4,10 +4,12 @@ import RoofSystem from './RoofSystem'
 import BathModule from './modules/BathModule'
 import BedroomModule from './modules/BedroomModule'
 import KitchenModule from './modules/KitchenModule'
+import LavaboModule from './modules/LavaboModule'
 import LivingModule from './modules/LivingModule'
 import MasterModule from './modules/MasterModule'
 import YardModule from './modules/YardModule'
 import { Box, Cylinder, WallContext } from './primitives'
+import { totalModeledLength } from '../data/housePlan'
 
 export default function HouseModel({ showRoof = false, showLowerLevel = true, showLeftWall = true, showRightWall = true, topDownView = false }) {
   const frontYard = getRow('front-yard')
@@ -15,13 +17,14 @@ export default function HouseModel({ showRoof = false, showLowerLevel = true, sh
   const kitchen = getRow('kitchen')
   const bed1 = getRow('bed-1')
   const bed2 = getRow('bed-2')
+  const lavabo = getRow('lavabo')
   const wc = getRow('wc')
   const master = getRow('master')
   const backYard = getRow('back-yard')
 
   return (
     <WallContext.Provider value={{ showLeftWall, showRightWall, topDownView }}>
-      <group position={[-13.35, 0, 0]}>
+      <group position={[-totalModeledLength / 2, 0, 0]}>
       {showLowerLevel ? (
         <group>
           {/* Phần mở rộng phía trước (đi từ đường/sân xe -> cầu thang -> sân trước và nhà) */}
@@ -55,7 +58,7 @@ export default function HouseModel({ showRoof = false, showLowerLevel = true, sh
           <Box size={[4.8, 0.02, 2.6]} position={[-2.25, 2.4, 0]} rotation={[0, 0, 0.26]} color="#aab3b6" />
 
           {/* Đế móng cao 2.5m dưới nhà */}
-          <Box size={[26.7, 2.5, 3.2]} position={[13.35, -1.25, 0]} color="#d0cec8" />
+          <Box size={[totalModeledLength, 2.5, 3.2]} position={[totalModeledLength / 2, -1.25, 0]} color="#d0cec8" />
         </group>
       ) : null}
 
@@ -64,6 +67,7 @@ export default function HouseModel({ showRoof = false, showLowerLevel = true, sh
       <KitchenModule row={kitchen} />
       <BedroomModule row={bed1} empty hasDoor={false} noDividerWall />
       <BedroomModule row={bed2} titleSide="right" bedWidth={1.1} bedDepth={1.75} hasCorridorWindow={true} />
+      <LavaboModule row={lavabo} />
       <BathModule row={wc} />
       <MasterModule row={master} />
       <YardModule row={backYard} back />

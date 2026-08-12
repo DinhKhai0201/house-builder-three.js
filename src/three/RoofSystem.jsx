@@ -20,6 +20,15 @@ export default function RoofSystem() {
   const roofTopY = 3.75
   const roofEdgeDrop = 0.08
   const roofSlope = 0.05
+  const gableSegments = [living, kitchen, bed1, bed2].flatMap((row) => {
+    if (row.start < puRoofCenter && row.end > puRoofCenter) {
+      return [
+        { start: row.start, end: puRoofCenter, width: avgWidth(row), slope: roofSlope },
+        { start: puRoofCenter, end: row.end, width: avgWidth(row), slope: -roofSlope },
+      ]
+    }
+    return [{ start: row.start, end: row.end, width: avgWidth(row), slope: row.end <= puRoofCenter ? roofSlope : -roofSlope }]
+  })
 
   const slabStart = wc.start
   const slabRearOverhang = 0.6
@@ -118,16 +127,10 @@ export default function RoofSystem() {
 
 
       {/* Tường tam giác bịt đầu hồi 2 bên hông dưới mái tôn (từ phòng khách đến phòng ngủ 2) */}
-      {[
-        { start: 0.8, end: 5.8, width: avgWidth(living), slope: 0.05 },
-        { start: 5.8, end: 9.075, width: avgWidth(kitchen), slope: 0.05 },
-        { start: 9.075, end: 11.5, width: avgWidth(kitchen), slope: -0.05 },
-        { start: 11.5, end: 14.2, width: avgWidth(bed1), slope: -0.05 },
-        { start: 14.2, end: 17.35, width: avgWidth(bed2), slope: -0.05 },
-      ].map((seg, idx) => {
+      {gableSegments.map((seg, idx) => {
         const L = seg.end - seg.start
         const cx = seg.start + L / 2
-        const Y_roof = roofTopY - 0.05 * Math.abs(cx - 9.075)
+        const Y_roof = roofTopY - roofSlope * Math.abs(cx - puRoofCenter)
         const H_box = 0.9
         const cy = Y_roof - H_box / 2 - 0.02
         return (

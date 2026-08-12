@@ -2,18 +2,23 @@ import { Canvas } from '@react-three/fiber'
 import { OrbitControls, OrthographicCamera, Html } from '@react-three/drei'
 import HouseModel from './three/HouseModel'
 import FirstPersonControls from './three/FirstPersonControls'
-import { planRows, corridorWidth } from './data/housePlan'
-import { roomCenterX, mainRoomCenterZ } from './three/roomUtils'
+import { totalModeledLength } from './data/housePlan'
+import { getRow, roomCenterX } from './three/roomUtils'
 
+const modelOffset = -totalModeledLength / 2
+const focusPoint = (key, height = 6, distance = 10) => {
+  const x = roomCenterX(getRow(key)) + modelOffset
+  return { target: [x, 1, 0], camera: [x, height, distance] }
+}
 const roomFocusPoints = {
-  front: { target: [-12.0, 1.0, 0], camera: [-15.0, 4.0, 8] },
-  living: { target: [-10.0, 1.0, 0], camera: [-10.0, 6.0, 10] },
-  kitchen: { target: [-4.7, 1.0, 0], camera: [-4.7, 6.0, 10] },
-  bed1: { target: [-0.5, 1.0, 0], camera: [-0.5, 6.0, 10] },
-  bed2: { target: [2.2, 1.0, 0], camera: [2.2, 6.0, 10] },
-  wc: { target: [4.45, 1.0, 0], camera: [4.45, 6.0, 8] },
-  master: { target: [8.35, 1.0, 0], camera: [8.35, 6.0, 10] },
-  back: { target: [12.35, 1.0, 0], camera: [12.35, 4.0, 8] },
+  front: focusPoint('front-yard', 4, 8),
+  living: focusPoint('living'),
+  kitchen: focusPoint('kitchen'),
+  bed1: focusPoint('bed-1'),
+  bed2: focusPoint('bed-2'),
+  wc: focusPoint('wc', 6, 8),
+  master: focusPoint('master'),
+  back: focusPoint('back-yard', 4, 8),
 }
 
 import { useEffect } from 'react'

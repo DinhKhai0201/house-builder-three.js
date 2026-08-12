@@ -1,17 +1,17 @@
 export const segments = [
   { key: 'front-yard', label: 'Sân trước', length: 1.5, type: 'yard', corridor: false },
-  { key: 'living', label: 'Phòng khách + bàn thờ', length: 5, type: 'public', corridor: false },
-  { key: 'kitchen', label: 'Bếp + ăn', length: 3.97, type: 'service', corridor: false },
-  { key: 'bed-1', label: 'Phòng đa năng', length: 3.7, type: 'bedroom', corridor: true },
-  { key: 'bed-2', label: 'Phòng ngủ 2', length: 3.7, type: 'bedroom', corridor: true },
-  { key: 'wc', label: 'WC + tắm', length: 2, type: 'bath', corridor: true },
-  { key: 'master', label: 'Phòng ngủ master', length: 5.5, type: 'master', corridor: false },
+  { key: 'living', label: 'Phòng khách + bàn thờ', length: 4.5, type: 'public', corridor: false },
+  { key: 'kitchen', label: 'Bếp + ăn', length: 4, type: 'service', corridor: false },
+  { key: 'bed-1', label: 'Phòng đa năng', length: 3, type: 'bedroom', corridor: true },
+  { key: 'bed-2', label: 'Phòng ngủ 2', length: 3.5, type: 'bedroom', corridor: true },
+  { key: 'lavabo', label: 'Hành lang + lavabo', length: 0.9, type: 'corridor', corridor: false },
+  { key: 'wc', label: 'WC + tắm', length: 1.8, type: 'bath', corridor: true },
+  { key: 'master', label: 'Phòng ngủ master', length: 4, type: 'master', corridor: false },
   { key: 'back-yard', label: 'Sân sau', length: 2, type: 'yard', corridor: false },
 ]
 
 export const widthAt = (distance) => {
-  // Tổng chiều rộng nhà dựa trên chiều rộng Bếp/Phòng (2.37m) + Hành lang (0.75m)
-  return 3.12
+  return 3
 }
 
 export const corridorWidth = 0.75
@@ -43,10 +43,10 @@ export const planRows = segments.map((segment, index) => {
 })
 
 export const keyNotes = [
-  'Hành lang bên phải rộng 0.8m chỉ bắt đầu từ đoạn phòng ngủ 1, phòng ngủ 2 và WC, sau đó dẫn tới cửa phòng master.',
-  'Phòng ngủ 1 và 2 được giữ nhỏ đúng tính chất nhà ống hẹp, ưu tiên vừa đủ giường 1.4m và tủ sâu 450mm.',
+  'Hành lang bên phải chạy qua phòng đa năng, phòng ngủ 2 và WC, với khoảng lavabo riêng dài 0.9m trước WC.',
+  'Phòng đa năng và phòng ngủ 2 được giữ nhỏ đúng tính chất nhà ống hẹp.',
   'Không thêm giếng trời riêng; ánh sáng chính đến từ cửa trước, cửa sau, cửa sổ phòng và sân sau.',
-  'Tổng chiều dài công năng đang mô phỏng là 26.7m; phần chênh đến 32m được xem là bố trí ngoài nhà, bậc cấp hoặc khoảng tiếp cận không nằm trong mặt bằng chính.',
+  `Tổng chiều dài công năng đang mô phỏng là ${totalModeledLength}m; phần chênh đến 32m là khoảng tiếp cận ngoài mặt bằng chính.`,
 ]
 
 export const descriptionBlocks = [
@@ -56,7 +56,7 @@ export const descriptionBlocks = [
   },
   {
     title: 'Điểm nhấn cần giữ',
-    text: 'Bàn thờ đặt ở vách chuyển tiếp giữa phòng khách và bếp, hành lang chỉ xuất hiện ở cụm phòng ngủ 1, phòng ngủ 2, WC, còn phòng master mở cửa từ cuối hành lang và có cửa kính lớn nhìn ra sân sau.',
+    text: 'Bàn thờ đặt ở vách chuyển tiếp giữa phòng khách và bếp; lavabo nằm tại khoảng hành lang riêng trước WC hình chữ nhật.',
   },
   {
     title: 'Nguyên tắc thực tế',
